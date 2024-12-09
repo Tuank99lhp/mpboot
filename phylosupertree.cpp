@@ -20,6 +20,7 @@
 #include "phylosupertree.h"
 #include "superalignment.h"
 #include "superalignmentpairwise.h"
+#include "superalignmentunlinked.h"
 #include "msetsblock.h"
 #include "myreader.h"
 
@@ -223,7 +224,12 @@ PhyloSuperTree::PhyloSuperTree(Params &params) :  IQTree() {
 		part_info[part].evalNNIs = 0.0;
 	}
 
-	aln = new SuperAlignment(this);
+	if (this->isSuperTreeUnlinked()) {
+		aln = new SuperAlignmentUnlinked(this);
+	} else {
+		aln = new SuperAlignment(this);
+	}
+	
 	if (params.print_conaln) {
 		string str = params.out_prefix;
 		str = params.out_prefix;

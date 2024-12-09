@@ -615,6 +615,7 @@ struct Params {
      * 		0 (NULL) for separate edge length (default)
      * 		'p' for proportional edge length
      * 		'j' for joint edge length
+     *          'u' for unlinked/separate tree topologies between partitions
      */
     char partition_type;
 
@@ -1669,8 +1670,14 @@ struct Params {
 	 * 1: only store 1 partial likelihood vector per node */
 	LhMemSave lh_mem_save;
 
+        /** true to save buffer, default: false */
+        bool buffer_mem_save;
+
 	/* TRUE to print .splits file in star-dot format */
 	bool print_splits_file;
+        
+        /* TRUE to print .splits.nex file in NEXUS format */
+        bool print_splits_nex_file;
     
     /** TRUE (default) to ignore identical sequences and add them back at the end */
     bool ignore_identical_seqs;

@@ -819,6 +819,7 @@ void parseArg(int argc, char *argv[], Params &params) {
 	params.count_trees = false;
 	params.print_branch_lengths = false;
 	params.lh_mem_save = LM_DETECT; // auto detect
+	params.buffer_mem_save = false;
 	params.start_tree = STT_PLL_PARSIMONY;
 	params.print_splits_file = false;
     params.ignore_identical_seqs = true;
@@ -1440,6 +1441,17 @@ void parseArg(int argc, char *argv[], Params &params) {
 				params.partition_type = 'j';
 				continue;
 			}
+			if (strcmp(argv[cnt], "-S") == 0) {
+                cnt++;
+                if (cnt >= argc)
+                    throw "Use -S <partition_file>";
+                params.partition_file = argv[cnt];
+                params.partition_type = 'u';
+                params.ignore_identical_seqs = false;
+                params.buffer_mem_save = true;
+                params.print_splits_nex_file = false;
+                continue;
+            }
 			if (strcmp(argv[cnt], "-keep_empty_seq") == 0) {
 				params.remove_empty_seq = false;
 				continue;

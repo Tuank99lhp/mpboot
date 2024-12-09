@@ -25,6 +25,7 @@
 #include "phylotree.h"
 #include "phylosupertree.h"
 #include "phylosupertreeplen.h"
+#include "phylosupertreeunlinked.h"
 #include "phyloanalysis.h"
 #include "alignment.h"
 #include "superalignment.h"
@@ -2183,7 +2184,9 @@ void runPhyloAnalysis(Params &params) {
 	/****************** read in alignment **********************/
 	if (params.partition_file) {
 		// Partition model analysis
-		if(params.partition_type){
+		if (params.partition_type == 'u') {
+			tree = new PhyloSuperTreeUnlinked(params);
+		} else if(params.partition_type){
 			// since nni5 does not work yet, stop the programm
 			if(params.nni5)
 				outError("-nni5 option is unsupported yet for proportitional partition model. please use -nni1 option");
