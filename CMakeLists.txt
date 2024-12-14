@@ -374,6 +374,7 @@ pdtreeset.cpp
 phyloanalysis.cpp
 phylonode.cpp
 phylosupertree.cpp
+phylosupertreeunlinked.cpp
 phylotree.cpp
 phylotreesse.cpp
 #phylotreeeigen.cpp

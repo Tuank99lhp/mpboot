@@ -46,16 +46,16 @@ public:
 	/**
 		constructor
 	*/
-    PhyloSuperTree(Params &params);
+    PhyloSuperTree(Params &params, bool is_iqtree = false);
 
 
     ~PhyloSuperTree();
 
     /** read partition model file */
-    void readPartition(Params &params);
+    void readPartition(Params &params, bool is_iqtree = false);
 
     /** read partition model file in NEXUS format into variable info */
-    void readPartitionNexus(Params &params);
+    void readPartitionNexus(Params &params, bool is_iqtree = false);
 
     void printPartition(const char *filename);
 
