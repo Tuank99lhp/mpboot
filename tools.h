@@ -615,6 +615,7 @@ struct Params {
      * 		0 (NULL) for separate edge length (default)
      * 		'p' for proportional edge length
      * 		'j' for joint edge length
+     *          'u' for unlinked/separate tree topologies between partitions
      */
     char partition_type;
 

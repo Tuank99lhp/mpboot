@@ -1440,6 +1440,15 @@ void parseArg(int argc, char *argv[], Params &params) {
 				params.partition_type = 'j';
 				continue;
 			}
+			if (strcmp(argv[cnt], "-S") == 0) {
+                cnt++;
+                if (cnt >= argc)
+                    throw "Use -S <partition_file>";
+                params.partition_file = argv[cnt];
+                params.partition_type = 'u';
+                params.ignore_identical_seqs = false;
+                continue;
+            }
 			if (strcmp(argv[cnt], "-keep_empty_seq") == 0) {
 				params.remove_empty_seq = false;
 				continue;
