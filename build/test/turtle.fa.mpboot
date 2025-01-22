@@ -1,0 +1,169 @@
+MPBoot 1.1.1 built Dec 22 2024
+
+Input file name: test/turtle.fa
+Type of analysis: Parsimony tree reconstruction + MPBoot bootstrap approximation (1000 replicates)
+Random seed number: 71278
+
+SEQUENCE ALIGNMENT
+------------------
+
+Input data: 16 sequences with 20820 nucleotide sites
+Number of constant sites: 11185 (= 53.7224% of all sites)
+Number of site patterns: 8574
+
+MAXIMUM PARSIMONY TREE
+-----------------------
+
+NOTE: Tree is UNROOTED although outgroup taxon 'protopterus' is drawn at root
+Numbers in parentheses are  ultrafast bootstrap supports (%)
+
++--protopterus
+|
+|           +--Anolis
+|        +--| (57)
+|        |  +--podarcis
+|     +--| (100)
+|     |  +--python
+|  +--| (90)
+|  |  |     +--Gallus
+|  |  |  +--| (100)
+|  |  |  |  +--Taeniopygia
+|  |  +--| (100)
+|  |     |     +--alligator
+|  |     |  +--| (100)
+|  |     |  |  +--caiman
+|  |     +--| (85)
+|  |        |        +--emys_orbicularis
+|  |        |     +--| (96)
+|  |        |     |  +--chelonoidis_nigra
+|  |        |  +--| (100)
+|  |        |  |  +--caretta
+|  |        +--| (100)
+|  |           +--phrynops
++--| (100)
+|  |     +--Homo
+|  |  +--| (100)
+|  |  |  +--Monodelphis
+|  +--| (100)
+|     +--Ornithorhynchus
+|
++--Xenopus
+
+Parsimony score of the tree: 21064
+Tree in newick format:
+
+(protopterus,((((Anolis,podarcis)57,python)100,((Gallus,Taeniopygia)100,((alligator,caiman)100,(((emys_orbicularis,chelonoidis_nigra)96,caretta)100,phrynops)100)85)100)90,((Homo,Monodelphis)100,Ornithorhynchus)100)100,Xenopus);
+
+CONSENSUS TREE
+--------------
+
+Consensus tree is constructed from 1000 bootstrap trees
+Branches with bootstrap support >0.000000% are kept (extended consensus)
+Numbers in parentheses are bootstrap supports (%)
+
++--protopterus
+|
+|           +--Anolis
+|        +--| (57)
+|        |  +--podarcis
+|     +--| (100)
+|     |  +--python
+|  +--| (90)
+|  |  |     +--Gallus
+|  |  |  +--| (100)
+|  |  |  |  +--Taeniopygia
+|  |  +--| (100)
+|  |     |     +--alligator
+|  |     |  +--| (100)
+|  |     |  |  +--caiman
+|  |     +--| (85)
+|  |        |        +--emys_orbicularis
+|  |        |     +--| (96)
+|  |        |     |  +--chelonoidis_nigra
+|  |        |  +--| (100)
+|  |        |  |  +--caretta
+|  |        +--| (100)
+|  |           +--phrynops
++--| (100)
+|  |     +--Homo
+|  |  +--| (100)
+|  |  |  +--Monodelphis
+|  +--| (100)
+|     +--Ornithorhynchus
+|
++--Xenopus
+
+
+Consensus tree in newick format: 
+
+(protopterus,((((Anolis,podarcis)57,python)100,((Gallus,Taeniopygia)100,((alligator,caiman)100,(((emys_orbicularis,chelonoidis_nigra)96,caretta)100,phrynops)100)85)100)90,((Homo,Monodelphis)100,Ornithorhynchus)100)100,Xenopus);
+
+TIME STAMP
+----------
+
+Date and time: Sun Dec 22 23:05:50 2024
+Total CPU time used: 24.8916 seconds (0h:0m:24s)
+Total wall-clock time used: 24.7099 seconds (0h:0m:24s)
+
+MPBoot 1.1.1 built Jan 19 2025
+
+Input file name: test/turtle.fa
+Type of analysis: Parsimony tree reconstruction
+Random seed number: 842737
+
+SEQUENCE ALIGNMENT
+------------------
+
+Input data: 16 sequences with 20820 nucleotide sites
+Number of constant sites: 11185 (= 53.7224% of all sites)
+Number of site patterns: 8574
+
+MAXIMUM PARSIMONY TREE
+-----------------------
+
+NOTE: Tree is UNROOTED although outgroup taxon 'protopterus' is drawn at root
+
++----protopterus
+|
+|                                             +----------Anolis
+|                                   +---------|
+|                                   |         +--podarcis
+|                        +----------|
+|                        |          +--python
+|                 +------|
+|                 |      |           +----Gallus
+|                 |      |     +-----|
+|                 |      |     |     +-----Taeniopygia
+|                 |      +-----|
+|                 |            |         +--alligator
+|                 |            |    +----|
+|                 |            |    |    +---caiman
+|                 |            +----|
+|                 |                 |           +--emys_orbicularis
+|                 |                 |        +--|
+|                 |                 |        |  +--chelonoidis_nigra
+|                 |                 |     +--|
+|                 |                 |     |  +--caretta
+|                 |                 +-----|
+|                 |                       +--phrynops
++-----------------|
+|                 |            +---------Homo
+|                 |       +----|
+|                 |       |    +---------Monodelphis
+|                 +-------|
+|                         +----------Ornithorhynchus
+|
++--------------------Xenopus
+
+Parsimony score of the tree: 21064
+Tree in newick format:
+
+(protopterus,((((Anolis,podarcis),python),((Gallus,Taeniopygia),((alligator,caiman),(((emys_orbicularis,chelonoidis_nigra),caretta),phrynops)))),((Homo,Monodelphis),Ornithorhynchus)),Xenopus);
+
+TIME STAMP
+----------
+
+Date and time: Sun Jan 19 16:26:43 2025
+Total CPU time used: 1.09872 seconds (0h:0m:1s)
+Total wall-clock time used: 1.1029 seconds (0h:0m:1s)
+

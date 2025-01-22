@@ -112,7 +112,9 @@ public:
 
     void createPLLPartition(Params &params, ostream &pllPartitionFileHandle);
 
-    void initializePLL(Params &params);
+    virtual void initializePLL(Params &params);
+
+    virtual void initializePLLSankoff(Params &params);
 
     void initializeModel(Params &params);
 
@@ -120,7 +122,7 @@ public:
             print tree to .treefile
             @param params program parameters, field root is taken
      */
-    void printResultTree(string suffix = "");
+    virtual void printResultTree(string suffix = "");
     /**
             print tree to out
             @param params program parameters, field root is taken
@@ -259,7 +261,7 @@ public:
             perform tree search
             @return best likelihood found
      */
-    double doTreeSearch();
+    virtual double doTreeSearch();
 
     /**
      *  Wrapper function that uses either PLL or IQ-TREE to optimize the branch length
@@ -278,7 +280,7 @@ public:
     /**
      *	Print numBestScore found so far, starting from the highest
      */
-    void printBestScores(int numBestScore);
+    virtual void printBestScores(int numBestScore);
 
     /****************************************************************************
             Fast Nearest Neighbor Interchange by maximum likelihood
@@ -310,7 +312,7 @@ public:
      * 		@param nniSteps (OUT) number of NNI steps done
      * 		@return the new NEWICK string
      */
-    string doNNISearch(int &nniCount, int &nniSteps);
+    virtual string doNNISearch(int &nniCount, int &nniSteps);
 
     /**
             @brief evaluate all NNIs and store them in possilbleNNIMoves list
@@ -423,7 +425,7 @@ public:
      *
      * @return
      */
-    double getBestScore(void) {
+    virtual double getBestScore(void) {
         return bestScore;
     }
 
@@ -779,7 +781,7 @@ public:
     /** summarize all bootstrap trees */
     void summarizeBootstrap(Params &params, MTreeSet &trees);
 
-    void summarizeBootstrap(Params &params);
+    virtual void summarizeBootstrap(Params &params);
 	void summarizeBootstrapParsimony(Params &params);
 	void summarizeBootstrapParsimonyWeight(Params &params);
 	void summarizeBootstrapParsimonyTop(Params &params);
@@ -790,7 +792,7 @@ public:
     void summarizeBootstrapParsimonyWeight(SplitGraph &sg);
     void summarizeBootstrapParsimonyTop(SplitGraph &sg);
 
-    void writeUFBootTrees(Params &params, StrVector &removed_seqs, StrVector &twin_seqs);
+    virtual void writeUFBootTrees(Params &params, StrVector &removed_seqs, StrVector &twin_seqs);
 
     /** @return bootstrap correlation coefficient for assessing convergence */
     double computeBootstrapCorrelation();

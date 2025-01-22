@@ -1,0 +1,626 @@
+MPBoot version 1.1.1 for Linux 64-bit built Jan 19 2025
+Copyright (c) 2016 Diep Thi Hoang, Le Sy Vinh, Tomas Flouri, Alexandros Stamatakis, Arndt von Haeseler and Bui Quang Minh.
+
+Host:    DESKTOP-A5MQTAL (AVX2, FMA3, 8 GB RAM)
+Command: ./mpboot-avx -s test/dna_M214_295_1836.phy -S test/dna_M214_295_1836.nex
+Seed:    834830 (Using SPRNG - Scalable Parallel Random Number Generator)
+Time:    Sun Jan 19 22:35:44 2025
+Kernel:  AVX
+
+Reading partition model file test/dna_M214_295_1836.nex ...
+Reading alignment file test/dna_M214_295_1836.phy ... Phylip format detected
+Alignment most likely contains DNA/RNA sequences
+Alignment has 295 sequences with 1836 columns and 1400 patterns
+ID   Sequence                         #Gap/Ambiguity
+1    Ajellomyces_capsulatum           179  (9.749%)	4
+2    Ajellomyces_capsulatus           197  (10.730%)	4
+3    Aleuria_aurantia                 367  (19.989%)	4
+4    Aliquandostipite_khaoyaiensis    176  (9.586%)	4
+5    Alternaria_alternata             180  (9.804%)	4
+6    Alternaria_brassicae             180  (9.804%)	4
+7    Alternaria_brassicicola          180  (9.804%)	4
+8    Alternaria_raphani               180  (9.804%)	4
+9    Amylocarpus_encephaloides        357  (19.444%)	4
+10   Arthrobotrys_conoides            187  (10.185%)	4
+11   Arthrobotrys_dactyloides         187  (10.185%)	4
+12   Arthrobotrys_robusta             186  (10.131%)	4
+13   Ascobolus_lineolatus             227  (12.364%)	4
+14   Ascodesmis_sphaerospora          198  (10.784%)	4
+15   Ascosphaera_apis                 189  (10.294%)	5
+16   Ascovaginospora_stellipala       187  (10.185%)	4
+17   Ascozonus_woolhopensis           188  (10.240%)	4
+18   Aspergillus_avenaceus            180  (9.804%)	4
+19   Aspergillus_flavus               197  (10.730%)	4
+20   Aspergillus_fumigatus            179  (9.749%)	4
+21   Aspergillus_terreus              201  (10.948%)	4
+22   Aspergillus_zonatus              180  (9.804%)	4
+23   Aureobasidium_pullulans          180  (9.804%)	5
+24   Auxarthron_zuffianum             190  (10.349%)	4
+25   Balansieae_sp.                   475  (25.871%)	4
+26   Balsamia_magnata                 166  (9.041%)	4
+27   Balsamia_vulgaris                167  (9.096%)	4
+28   Barssia_oregonensis              166  (9.041%)	4
+29   Blastomyces_dermatitidis         181  (9.858%)	6
+30   Blumeria_graminis                209  (11.383%)	4
+31   Botryosphaeria_rhodina           197  (10.730%)	4
+32   Botryosphaeria_ribis             186  (10.131%)	4
+33   Botrytis_cinerea                 1280 (69.717%) !!!	4
+34   Boudiera_acanthospora            198  (10.784%)	4
+35   Bunodophoron_scrobiculatum       177  (9.641%)	4
+36   Byssochlamys_nivea               190  (10.349%)	4
+37   Byssonectria_terrestris          204  (11.111%)	4
+38   Calicium_adspersum               311  (16.939%)	4
+39   Caloscypha_fulgens               195  (10.621%)	4
+40   Camarops_microspora              398  (21.678%)	4
+41   Candida_albicans                 191  (10.403%)	4
+42   Capnodium_dematum                785  (42.756%)	4
+43   Capronia_mansonii                182  (9.913%)	6
+44   Capronia_pilosella               191  (10.403%)	4
+45   Cazia_flexiascus                 179  (9.749%)	4
+46   Ceratocystis_fimbriata           188  (10.240%)	4
+47   Chaenothecopsis_savonica         191  (10.403%)	4
+48   Chaetomium_elatum                192  (10.458%)	4
+49   Chaetopsina_fulva                184  (10.022%)	4
+50   Chaetosartorya_cremea            180  (9.804%)	4
+51   Choiromyces_meandriformis        177  (9.641%)	4
+52   Choiromyces_venosus              177  (9.641%)	4
+53   Chromocleista_malachitea         180  (9.804%)	4
+54   Chrysosporium_parvum             190  (10.349%)	4
+55   Cladia_aggregata                 196  (10.675%)	4
+56   Cladonia_bellidiflora            176  (9.586%)	4
+57   Clathrospora_diplospora          181  (9.858%)	4
+58   Claviceps_purpurea               920  (50.109%) !!!	4
+59   Coccidioides_immitis             180  (9.804%)	4
+60   Cochliobolus_sativus             188  (10.240%)	4
+61   Coniosporium_apollinis           185  (10.076%)	4
+62   Coniosporium_perforans           182  (9.913%)	4
+63   Cookeina_sulcipes                346  (18.845%)	4
+64   Cordyceps_capitata               926  (50.436%) !!!	4
+65   Cronartium_ribicola              179  (9.749%)	4
+66   Cryphonectria_cubensis           187  (10.185%)	4
+67   Cryphonectria_havanensis         187  (10.185%)	4
+68   Cryphonectria_parasitica         187  (10.185%)	4
+69   Ctenomyces_serratus              190  (10.349%)	4
+70   Cucurbidothis_pithyophila        187  (10.185%)	4
+71   Cucurbitaria_berberidis          188  (10.240%)	4
+72   Cucurbitaria_elongata            189  (10.294%)	4
+73   Cudonia_confusa                  264  (14.379%)	5
+74   Cyphelium_inquinans              183  (9.967%)	6
+75   Cyttaria_darwinii                189  (10.294%)	4
+76   Dactylella_oxyspora              186  (10.131%)	4
+77   Dactylella_rhopalota             188  (10.240%)	4
+78   Dendrographa_leucophaea_f._mino  691  (37.636%)	4
+79   Desmazierella_acicola            204  (11.111%)	4
+80   Diatrype_disciformis             791  (43.083%)	4
+81   Dingleya_verrucosa               177  (9.641%)	4
+82   Diplodia_tumefaciens             1210 (65.904%) !!!	4
+83   Diploschistes_ocellatus          207  (11.275%)	4
+84   Dipodascopsis_uninucleata        184  (10.022%)	4
+85   Discina_macrospora               180  (9.804%)	4
+86   Disciotis_venosa                 180  (9.804%)	4
+87   Dothidea_hippophaeos             195  (10.621%)	4
+88   Dothidea_insculpta               187  (10.185%)	4
+89   Duddingtonia_flagrans            192  (10.458%)	4
+90   Elaphomyces_aculeatus            573  (31.209%)	4
+91   Elaphomyces_leveillei            183  (9.967%)	4
+92   Elaphomyces_maculatus            195  (10.621%)	4
+93   Emericella_nidulans              202  (11.002%)	4
+94   Endomyces_sp.                    182  (9.913%)	7
+95   Endothia_gyrosa                  187  (10.185%)	4
+96   Epichloe_baconii                 928  (50.545%) !!!	4
+97   Eremascus_albus                  184  (10.022%)	4
+98   Eremothecium_gossypii            183  (9.967%)	4
+99   Erysiphe_orontii                 175  (9.532%)	4
+100  Eupenicillium_crustaceum         181  (9.858%)	4
+101  Eupenicillium_javanicum          190  (10.349%)	4
+102  Eurotium_herbariorum             180  (9.804%)	4
+103  Eurotium_rubrum                  189  (10.294%)	4
+104  Exophiala_dermatitidis           181  (9.858%)	4
+105  Exophiala_jeanselmei             181  (9.858%)	4
+106  Exophiala_mansonii               190  (10.349%)	4
+107  Fennellia_flavipes               180  (9.804%)	4
+108  Fischerula_subcaulis             179  (9.749%)	4
+109  Fusarium_cerealis                359  (19.553%)	4
+110  Fusarium_culmorum                362  (19.717%)	4
+111  Fusarium_equiseti                359  (19.553%)	4
+112  Fusarium_merismoides             359  (19.553%)	4
+113  Fusarium_oxysporum               359  (19.553%)	4
+114  Gaeumannomyces_graminis_var._gr  819  (44.608%)	4
+115  Geopyxis_carbonaria              345  (18.791%)	4
+116  Geosmithia_cylindrospora         179  (9.749%)	4
+117  Geosmithia_lavendula             185  (10.076%)	4
+118  Geosmithia_namyslowskii          189  (10.294%)	4
+119  Geosmithia_putterillii           183  (9.967%)	4
+120  Gibberella_pulicaris             184  (10.022%)	4
+121  Glaziella_aurantiaca             192  (10.458%)	4
+122  Glomerella_cingulata             184  (10.022%)	4
+123  Glomerella_glycines              858  (46.732%)	4
+124  Graphis_scripta                  192  (10.458%)	4
+125  Graphium_tectonae                192  (10.458%)	4
+126  Gymnoascoideus_petalosporus      190  (10.349%)	4
+127  Gyromitra_esculenta1             231  (12.582%)	4
+128  Gyromitra_esculenta2             178  (9.695%)	4
+129  Gyromitra_melaleucoides          179  (9.749%)	4
+130  Gyromitra_montana                178  (9.695%)	4
+131  Hamigera_avellanea               184  (10.022%)	4
+132  Helminthosporium_solani          178  (9.695%)	4
+133  Helminthosporium_velutinum       179  (9.749%)	4
+134  Helvella_lacunosa                167  (9.096%)	4
+135  Hemicarpenteles_ornatus          180  (9.804%)	4
+136  Herpotrichia_juniperi            188  (10.240%)	4
+137  Herpotrichia_nigra               187  (10.185%)	4
+138  Holleya_sinecauda                182  (9.913%)	4
+139  Hydnotrya_cerebriformis          178  (9.695%)	4
+140  Hydnotrya_tulasnei               186  (10.131%)	4
+141  Hypocrea_lutea                   184  (10.022%)	4
+142  Hypomyces_chrysospermus          191  (10.403%)	4
+143  Hypomyces_polyporinus            849  (46.242%)	4
+144  Hypoxylon_nummularium            182  (9.913%)	4
+145  Kionochaeta_spissa               183  (9.967%)	4
+146  Kirschsteiniothelia_maritima     179  (9.749%)	4
+147  Labyrinthomyces_varius           177  (9.641%)	4
+148  Lecanora_dispersa                195  (10.621%)	4
+149  Leifidium_tenerum                178  (9.695%)	4
+150  Leotia_lubrica                   249  (13.562%)	4
+151  Leptosphaeria_bicolor            180  (9.804%)	4
+152  Leptosphaeria_doliolum           180  (9.804%)	4
+153  Leptosphaeria_maculans           181  (9.858%)	4
+154  Leucangium_carthusianum          179  (9.749%)	4
+155  Lomentospora_prolificans         192  (10.458%)	4
+156  Lophiostoma_crenatum             190  (10.349%)	4
+157  Magnaporthe_grisea               182  (9.913%)	4
+158  Meliola_juddiana                 182  (9.913%)	4
+159  Meliola_niessliana               180  (9.804%)	4
+160  Meliolina_sydowiana              730  (39.760%)	4
+161  Merimbla_ingelheimense           183  (9.967%)	4
+162  Metarhizium_anisopliae           181  (9.858%)	4
+163  Microascus_cirrosus              192  (10.458%)	4
+164  Microglossum_viride              290  (15.795%)	4
+165  Microsporum_audouinii            992  (54.031%) !!!	4
+166  Microstoma_protracta             205  (11.166%)	4
+167  Monacrosporium_ellipsospora      184  (10.022%)	4
+168  Monacrosporium_gephyropaga       187  (10.185%)	4
+169  Monacrosporium_haptotylum        185  (10.076%)	4
+170  Monascus_purpureus               191  (10.403%)	4
+171  Monilinia_fructicola             214  (11.656%)	4
+172  Monilinia_laxa                   213  (11.601%)	4
+173  Monodictys_castaneae             184  (10.022%)	4
+174  Morchella_elata                  179  (9.749%)	4
+175  Morchella_esculenta              179  (9.749%)	4
+176  Mycocalicium_albonigrum          233  (12.691%)	4
+177  Mycosphaerella_mycopappi         180  (9.804%)	4
+178  Nadsoniella_nigra                186  (10.131%)	4
+179  Nectria_cinnabarina              867  (47.222%)	4
+180  Nectria_haematococca             359  (19.553%)	4
+181  Neobulgaria_premnophila          179  (9.749%)	4
+182  Neolecta_irregularis             318  (17.320%)	4
+183  Neolecta_vitellina               184  (10.022%)	4
+184  Neosartorya_fischeri             190  (10.349%)	4
+185  Nephroma_arcticum                454  (24.728%)	4
+186  Neurospora_crassa                184  (10.022%)	4
+187  Obolarina_dryophila              495  (26.961%)	4
+188  Onygena_equina                   177  (9.641%)	4
+189  Ophiobolus_herpotrichus          181  (9.858%)	4
+190  Ophiostoma_stenoceras            191  (10.403%)	4
+191  Ophiostoma_ulmi                  191  (10.403%)	4
+192  Orbilia_delicatula               314  (17.102%)	4
+193  Otidea_leporina                  214  (11.656%)	4
+194  Pachyphloeus_melanoxanthus       178  (9.695%)	4
+195  Paecilomyces_tenuipes_2          184  (10.022%)	4
+196  Paecilomyces_variotii            223  (12.146%)	4
+197  Paurocotylis_pila                196  (10.675%)	4
+198  Peltigera_neopolydactyla         269  (14.651%)	4
+199  Penicillium_chrysogenum          182  (9.913%)	5
+200  Petriella_setifera               190  (10.349%)	4
+201  Peziza_badia                     236  (12.854%)	4
+202  Peziza_quelepidotia              223  (12.146%)	4
+203  Peziza_succosa                   195  (10.621%)	4
+204  Phaeoannellomyces_elegans        182  (9.913%)	4
+205  Phaeococcomyces_exophialae       195  (10.621%)	4
+206  Phaeosclera_dematioides          180  (9.804%)	4
+207  Phaeosphaeria_microscopica       181  (9.858%)	4
+208  Phaeosphaeria_nodorum            181  (9.858%)	4
+209  Phyllactinia_guttata             179  (9.749%)	4
+210  Pichia_membranaefaciens          214  (11.656%)	4
+211  Pilophorus_acicularis            178  (9.695%)	4
+212  Pleospora_betae                  180  (9.804%)	4
+213  Pleospora_herbarum               180  (9.804%)	4
+214  Pleospora_rudis                  211  (11.492%)	4
+215  Pneumocystis_carinii             175  (9.532%)	4
+216  Podospora_anserina               183  (9.967%)	4
+217  Porpidia_crustulata              234  (12.745%)	4
+218  Protomyces_inouyei               180  (9.804%)	4
+219  Pseudallescheria_boydii          192  (10.458%)	4
+220  Pseudallescheria_ellipsoidea     192  (10.458%)	4
+221  Pseudorhizina_californica        203  (11.057%)	4
+222  Pulvinula_archeri                204  (11.111%)	4
+223  Pyrenophora_trichostoma          180  (9.804%)	4
+224  Pyrenophora_tritici-repentis     190  (10.349%)	4
+225  Pyronema_domesticum              188  (10.240%)	4
+226  Reddellomyces_donkii             175  (9.532%)	4
+227  Renispora_flavissima             189  (10.294%)	4
+228  Rhizina_undulata                 179  (9.749%)	4
+229  Rhytidhysteron_rufulum           219  (11.928%)	4
+230  Rhytisma_salicinum               254  (13.834%)	4
+231  Saccharomyces_barnettii          183  (9.967%)	4
+232  Saitoella_complicata             181  (9.858%)	4
+233  Sarcinomyces_crustaceus          194  (10.566%)	4
+234  Sarcinomyces_phaeomuriformis     180  (9.804%)	5
+235  Sarcoscypha_austriaca            226  (12.309%)	4
+236  Sarcosoma_globosum               212  (11.547%)	4
+237  Schizosaccharomyces_japonicus    158  (8.606%)	4
+238  Sclerotinia_sclerotiorum         185  (10.076%)	4
+239  Scutellinia_scutellata           195  (10.621%)	4
+240  Setosphaeria_rostrata            189  (10.294%)	4
+241  Siphula_ceratites                219  (11.928%)	4
+242  Solorina_crocea                  270  (14.706%)	4
+243  Sordaria_fimicola                184  (10.022%)	4
+244  Spathularia_flavida              200  (10.893%)	4
+245  Sphaerophorus_globosus           243  (13.235%)	4
+246  Sphinctrina_turbinata            180  (9.804%)	5
+247  Spicellum_roseum                 559  (30.447%)	4
+248  Sporormia_lignicola              187  (10.185%)	4
+249  Sporothrix_schenckii             197  (10.730%)	4
+250  Stenocybe_pullatula              178  (9.695%)	4
+251  Stereocaulon_ramulosum           178  (9.695%)	4
+252  Symbion_of_Hamiltonaphis_styrac  184  (10.022%)	4
+253  Talaromyces_bacillisporus        182  (9.913%)	4
+254  Talaromyces_eburneus             179  (9.749%)	4
+255  Talaromyces_emersonii            180  (9.804%)	4
+256  Talaromyces_flavus               188  (10.240%)	4
+257  Taphrina_californica             184  (10.022%)	4
+258  Taphrina_deformans               186  (10.131%)	4
+259  Taphrina_wiesneri                177  (9.641%)	4
+260  Tarzetta_catinus                 219  (11.928%)	4
+261  Terfezia_arenaria                177  (9.641%)	4
+262  Terfezia_terfezioides            178  (9.695%)	4
+263  Terichophaea_hybrida             284  (15.468%)	4
+264  Texosporium_sancti-jacobi        181  (9.858%)	6
+265  Thecotheus_holmskjoldii          181  (9.858%)	4
+266  Thelebolus_stercoreus            186  (10.131%)	4
+267  Thelomma_mammosum                180  (9.804%)	4
+268  Thermoascus_crustaceus           202  (11.002%)	4
+269  Tolypocladium_cylindrosporum     857  (46.678%)	4
+270  Trichophyton_rubrum              179  (9.749%)	4
+271  Trichothecium_roseum             571  (31.100%)	4
+272  Tuber_borchii                    176  (9.586%)	4
+273  Tuber_excavatum                  177  (9.641%)	4
+274  Tuber_gibbosum                   177  (9.641%)	4
+275  Tuber_magnatum                   178  (9.695%)	4
+276  Tuber_panniferum                 170  (9.259%)	4
+277  Tuber_rapaeodorum                186  (10.131%)	4
+278  Uncinocarpus_reesii              179  (9.749%)	4
+279  Underwoodia_columnaris           172  (9.368%)	4
+280  Unidentified                     197  (10.730%)	4
+281  Urnula_hiemalis                  187  (10.185%)	4
+282  Ustilago_maydis                  181  (9.858%)	4
+283  Valsa_leucostoma                 192  (10.458%)	4
+284  Verpa_bohemica                   180  (9.804%)	4
+285  Verpa_conica                     180  (9.804%)	4
+286  Verticillium_dahliae1            182  (9.913%)	5
+287  Verticillium_dahliae2            182  (9.913%)	5
+288  Verticillium_lecanii             857  (46.678%)	4
+289  Verticillium_psalliotae          858  (46.732%)	4
+290  Westerdykella_dispersa           188  (10.240%)	4
+291  Wilcoxina_mikolae                205  (11.166%)	4
+292  Wynnella_silvicolor              167  (9.096%)	4
+293  Xerocomus_chrysenteron           172  (9.368%)	4
+294  Xylaria_carpophila               192  (10.458%)	4
+295  symbiont_of_Lasioderma_serricor  178  (9.695%)	4
+WARNING: 6 sequences contain more than 50% gaps/ambiguity
+**** TOTAL                            72168 (13.324%)
+NOTE: No CharPartition defined, use all CharSets
+
+Reading partition ENSGALG00000000223.macse_DNA_gb (model=, aln=, seq=, pos=1-1836) ...
+295 sequences and 1836 sites extracted
+
+Reading partition ENSGALG00000000224.macse_DNA_gb (model=, aln=, seq=, pos=1-1836) ...
+295 sequences and 1836 sites extracted
+
+Reading partition ENSGALG00000000225.macse_DNA_gb (model=, aln=, seq=, pos=1-1836) ...
+295 sequences and 1836 sites extracted
+
+Reading partition ENSGALG00000000226.macse_DNA_gb (model=, aln=, seq=, pos=1-1836) ...
+295 sequences and 1836 sites extracted
+Degree of missing data: 0.000
+
+
+Computing random stepwise addition parsimony tree for evaluating patterns...
+Time for random stepwise addition parsimony tree construction: 0.022 seconds
+Parsimony score: 6745
+Reordering patterns in alignment by decreasing order of pattern parsimony... 0.003 seconds
+
+Computing random stepwise addition parsimony tree for evaluating patterns...
+Time for random stepwise addition parsimony tree construction: 0.037 seconds
+Parsimony score: 6745
+Reordering patterns in alignment by decreasing order of pattern parsimony... 0.000 seconds
+
+Computing random stepwise addition parsimony tree for evaluating patterns...
+Time for random stepwise addition parsimony tree construction: 0.029 seconds
+Parsimony score: 6745
+Reordering patterns in alignment by decreasing order of pattern parsimony... 0.000 seconds
+
+Computing random stepwise addition parsimony tree for evaluating patterns...
+Time for random stepwise addition parsimony tree construction: 0.033 seconds
+Parsimony score: 6745
+Reordering patterns in alignment by decreasing order of pattern parsimony... 0.002 seconds
+
+Create initial parsimony tree by phylogenetic likelihood library (PLL)... 0.159 seconds
+
+NOTE: 290.145 MB RAM is required!
+Current best tree score: 26750
+
+Generating 99 parsimony trees... (0 duplicated parsimony trees)
+CPU time: 3
+Generating 99 parsimony trees... (0 duplicated parsimony trees)
+CPU time: 3
+Generating 99 parsimony trees... (0 duplicated parsimony trees)
+CPU time: 3
+Generating 99 parsimony trees... (0 duplicated parsimony trees)
+CPU time: 3
+Current best score: 26683 / CPU time: 13
+
+Time: 0h:0m:14s
+BETTER TREE FOUND at iteration 2: 6668 / CPU time: 14s
+
+RATCHET Iteration 10 / Score: 6670 / Time: 0h:0m:14s
+BETTER TREE FOUND at iteration 14: 6667 / CPU time: 15s
+
+RATCHET Iteration 20 / Score: 6667 / Time: 0h:0m:14s (0h:3m:47s left)
+BETTER TREE FOUND at iteration 26: 6665 / CPU time: 15s
+
+RATCHET Iteration 30 / Score: 6666 / Time: 0h:0m:15s (0h:2m:34s left)
+BETTER TREE FOUND at iteration 38: 6664 / CPU time: 16s
+
+RATCHET Iteration 40 / Score: 6664 / Time: 0h:0m:15s (0h:1m:58s left)
+RATCHET Iteration 50 / Score: 6664 / Time: 0h:0m:16s (0h:1m:33s left)
+BETTER TREE FOUND at iteration 52: 6663 / CPU time: 16s
+
+RATCHET Iteration 60 / Score: 6665 / Time: 0h:0m:16s (0h:1m:20s left)
+BETTER TREE FOUND at iteration 66: 6662 / CPU time: 17s
+
+RATCHET Iteration 70 / Score: 6664 / Time: 0h:0m:16s (0h:1m:11s left)
+RATCHET Iteration 80 / Score: 6664 / Time: 0h:0m:17s (0h:1m:1s left)
+RATCHET Iteration 90 / Score: 6662 / Time: 0h:0m:17s (0h:0m:54s left)
+RATCHET Iteration 100 / Score: 6665 / Time: 0h:0m:18s (0h:0m:47s left)
+RATCHET Iteration 110 / Score: 6664 / Time: 0h:0m:18s (0h:0m:42s left)
+RATCHET Iteration 120 / Score: 6662 / Time: 0h:0m:18s (0h:0m:38s left)
+RATCHET Iteration 130 / Score: 6662 / Time: 0h:0m:19s (0h:0m:34s left)
+RATCHET Iteration 140 / Score: 6663 / Time: 0h:0m:19s (0h:0m:31s left)
+RATCHET Iteration 150 / Score: 6663 / Time: 0h:0m:19s (0h:0m:28s left)
+RATCHET Iteration 160 / Score: 6664 / Time: 0h:0m:20s (0h:0m:26s left)
+RATCHET Iteration 170 / Score: 6662 / Time: 0h:0m:20s (0h:0m:23s left)
+RATCHET Iteration 180 / Score: 6663 / Time: 0h:0m:21s (0h:0m:21s left)
+RATCHET Iteration 190 / Score: 6662 / Time: 0h:0m:21s (0h:0m:19s left)
+RATCHET Iteration 200 / Score: 6662 / Time: 0h:0m:21s (0h:0m:18s left)
+RATCHET Iteration 210 / Score: 6662 / Time: 0h:0m:22s (0h:0m:16s left)
+RATCHET Iteration 220 / Score: 6662 / Time: 0h:0m:22s (0h:0m:14s left)
+RATCHET Iteration 230 / Score: 6662 / Time: 0h:0m:22s (0h:0m:13s left)
+RATCHET Iteration 240 / Score: 6662 / Time: 0h:0m:23s (0h:0m:12s left)
+RATCHET Iteration 250 / Score: 6663 / Time: 0h:0m:23s (0h:0m:10s left)
+RATCHET Iteration 260 / Score: 6662 / Time: 0h:0m:23s (0h:0m:9s left)
+RATCHET Iteration 270 / Score: 6662 / Time: 0h:0m:24s (0h:0m:8s left)
+RATCHET Iteration 280 / Score: 6664 / Time: 0h:0m:24s (0h:0m:7s left)
+RATCHET Iteration 290 / Score: 6662 / Time: 0h:0m:25s (0h:0m:6s left)
+RATCHET Iteration 300 / Score: 6662 / Time: 0h:0m:25s (0h:0m:5s left)
+RATCHET Iteration 310 / Score: 6664 / Time: 0h:0m:25s (0h:0m:4s left)
+RATCHET Iteration 320 / Score: 6663 / Time: 0h:0m:26s (0h:0m:3s left)
+RATCHET Iteration 330 / Score: 6663 / Time: 0h:0m:26s (0h:0m:2s left)
+RATCHET Iteration 340 / Score: 6662 / Time: 0h:0m:27s (0h:0m:2s left)
+RATCHET Iteration 350 / Score: 6662 / Time: 0h:0m:27s (0h:0m:1s left)
+RATCHET Iteration 360 / Score: 6663 / Time: 0h:0m:27s (0h:0m:0s left)
+Tree 0 score: 6662
+Time: 0h:0m:27s
+BETTER TREE FOUND at iteration 2: 6668 / CPU time: 28s
+
+BETTER TREE FOUND at iteration 6: 6667 / CPU time: 28s
+
+RATCHET Iteration 10 / Score: 6667 / Time: 0h:0m:28s
+BETTER TREE FOUND at iteration 12: 6666 / CPU time: 28s
+
+RATCHET Iteration 20 / Score: 6667 / Time: 0h:0m:28s (0h:7m:18s left)
+BETTER TREE FOUND at iteration 24: 6665 / CPU time: 29s
+
+RATCHET Iteration 30 / Score: 6666 / Time: 0h:0m:29s (0h:4m:53s left)
+RATCHET Iteration 40 / Score: 6666 / Time: 0h:0m:29s (0h:3m:33s left)
+RATCHET Iteration 50 / Score: 6665 / Time: 0h:0m:29s (0h:2m:45s left)
+RATCHET Iteration 60 / Score: 6665 / Time: 0h:0m:30s (0h:2m:14s left)
+RATCHET Iteration 70 / Score: 6665 / Time: 0h:0m:30s (0h:1m:51s left)
+RATCHET Iteration 80 / Score: 6665 / Time: 0h:0m:30s (0h:1m:34s left)
+RATCHET Iteration 90 / Score: 6665 / Time: 0h:0m:31s (0h:1m:21s left)
+RATCHET Iteration 100 / Score: 6663 / Time: 0h:0m:31s (0h:1m:11s left)
+BETTER TREE FOUND at iteration 100: 6663 / CPU time: 32s
+
+RATCHET Iteration 110 / Score: 6666 / Time: 0h:0m:32s (0h:1m:24s left)
+RATCHET Iteration 120 / Score: 6663 / Time: 0h:0m:32s (0h:1m:15s left)
+RATCHET Iteration 130 / Score: 6663 / Time: 0h:0m:32s (0h:1m:8s left)
+RATCHET Iteration 140 / Score: 6663 / Time: 0h:0m:33s (0h:1m:1s left)
+RATCHET Iteration 150 / Score: 6663 / Time: 0h:0m:33s (0h:0m:56s left)
+RATCHET Iteration 160 / Score: 6663 / Time: 0h:0m:33s (0h:0m:50s left)
+BETTER TREE FOUND at iteration 168: 6662 / CPU time: 34s
+
+RATCHET Iteration 170 / Score: 6665 / Time: 0h:0m:34s (0h:1m:0s left)
+RATCHET Iteration 180 / Score: 6664 / Time: 0h:0m:34s (0h:0m:55s left)
+RATCHET Iteration 190 / Score: 6662 / Time: 0h:0m:35s (0h:0m:51s left)
+RATCHET Iteration 200 / Score: 6662 / Time: 0h:0m:35s (0h:0m:47s left)
+RATCHET Iteration 210 / Score: 6663 / Time: 0h:0m:35s (0h:0m:43s left)
+RATCHET Iteration 220 / Score: 6662 / Time: 0h:0m:36s (0h:0m:40s left)
+RATCHET Iteration 230 / Score: 6662 / Time: 0h:0m:36s (0h:0m:37s left)
+RATCHET Iteration 240 / Score: 6662 / Time: 0h:0m:36s (0h:0m:34s left)
+RATCHET Iteration 250 / Score: 6662 / Time: 0h:0m:37s (0h:0m:32s left)
+RATCHET Iteration 260 / Score: 6663 / Time: 0h:0m:37s (0h:0m:29s left)
+RATCHET Iteration 270 / Score: 6663 / Time: 0h:0m:37s (0h:0m:27s left)
+RATCHET Iteration 280 / Score: 6662 / Time: 0h:0m:38s (0h:0m:25s left)
+RATCHET Iteration 290 / Score: 6662 / Time: 0h:0m:38s (0h:0m:23s left)
+RATCHET Iteration 300 / Score: 6662 / Time: 0h:0m:39s (0h:0m:21s left)
+RATCHET Iteration 310 / Score: 6662 / Time: 0h:0m:39s (0h:0m:20s left)
+RATCHET Iteration 320 / Score: 6663 / Time: 0h:0m:39s (0h:0m:18s left)
+RATCHET Iteration 330 / Score: 6662 / Time: 0h:0m:40s (0h:0m:16s left)
+RATCHET Iteration 340 / Score: 6662 / Time: 0h:0m:40s (0h:0m:15s left)
+RATCHET Iteration 350 / Score: 6663 / Time: 0h:0m:40s (0h:0m:13s left)
+RATCHET Iteration 360 / Score: 6663 / Time: 0h:0m:41s (0h:0m:12s left)
+RATCHET Iteration 370 / Score: 6664 / Time: 0h:0m:41s (0h:0m:10s left)
+RATCHET Iteration 380 / Score: 6662 / Time: 0h:0m:41s (0h:0m:9s left)
+RATCHET Iteration 390 / Score: 6662 / Time: 0h:0m:42s (0h:0m:8s left)
+RATCHET Iteration 400 / Score: 6663 / Time: 0h:0m:42s (0h:0m:7s left)
+RATCHET Iteration 410 / Score: 6662 / Time: 0h:0m:43s (0h:0m:6s left)
+RATCHET Iteration 420 / Score: 6664 / Time: 0h:0m:43s (0h:0m:4s left)
+RATCHET Iteration 430 / Score: 6662 / Time: 0h:0m:43s (0h:0m:3s left)
+RATCHET Iteration 440 / Score: 6662 / Time: 0h:0m:44s (0h:0m:2s left)
+RATCHET Iteration 450 / Score: 6663 / Time: 0h:0m:44s (0h:0m:1s left)
+RATCHET Iteration 460 / Score: 6662 / Time: 0h:0m:44s (0h:0m:0s left)
+Tree 1 score: 6662
+Time: 0h:0m:45s
+BETTER TREE FOUND at iteration 6: 6670 / CPU time: 45s
+
+RATCHET Iteration 10 / Score: 6670 / Time: 0h:0m:45s
+BETTER TREE FOUND at iteration 12: 6668 / CPU time: 46s
+
+BETTER TREE FOUND at iteration 18: 6665 / CPU time: 46s
+
+RATCHET Iteration 20 / Score: 6666 / Time: 0h:0m:45s (0h:11m:56s left)
+RATCHET Iteration 30 / Score: 6666 / Time: 0h:0m:46s (0h:7m:37s left)
+BETTER TREE FOUND at iteration 36: 6664 / CPU time: 46s
+
+RATCHET Iteration 40 / Score: 6665 / Time: 0h:0m:46s (0h:5m:52s left)
+RATCHET Iteration 50 / Score: 6667 / Time: 0h:0m:47s (0h:4m:33s left)
+RATCHET Iteration 60 / Score: 6663 / Time: 0h:0m:47s (0h:3m:40s left)
+BETTER TREE FOUND at iteration 60: 6663 / CPU time: 47s
+
+RATCHET Iteration 70 / Score: 6664 / Time: 0h:0m:47s (0h:3m:19s left)
+RATCHET Iteration 80 / Score: 6663 / Time: 0h:0m:48s (0h:2m:49s left)
+RATCHET Iteration 90 / Score: 6663 / Time: 0h:0m:48s (0h:2m:26s left)
+RATCHET Iteration 100 / Score: 6663 / Time: 0h:0m:48s (0h:2m:7s left)
+RATCHET Iteration 110 / Score: 6664 / Time: 0h:0m:49s (0h:1m:52s left)
+RATCHET Iteration 120 / Score: 6663 / Time: 0h:0m:49s (0h:1m:39s left)
+RATCHET Iteration 130 / Score: 6663 / Time: 0h:0m:49s (0h:1m:28s left)
+RATCHET Iteration 140 / Score: 6663 / Time: 0h:0m:50s (0h:1m:19s left)
+RATCHET Iteration 150 / Score: 6663 / Time: 0h:0m:50s (0h:1m:11s left)
+RATCHET Iteration 160 / Score: 6663 / Time: 0h:0m:51s (0h:1m:4s left)
+RATCHET Iteration 170 / Score: 6666 / Time: 0h:0m:51s (0h:0m:57s left)
+RATCHET Iteration 180 / Score: 6663 / Time: 0h:0m:51s (0h:0m:51s left)
+RATCHET Iteration 190 / Score: 6663 / Time: 0h:0m:52s (0h:0m:46s left)
+RATCHET Iteration 200 / Score: 6663 / Time: 0h:0m:52s (0h:0m:42s left)
+RATCHET Iteration 210 / Score: 6664 / Time: 0h:0m:53s (0h:0m:37s left)
+RATCHET Iteration 220 / Score: 6663 / Time: 0h:0m:53s (0h:0m:33s left)
+RATCHET Iteration 230 / Score: 6664 / Time: 0h:0m:53s (0h:0m:30s left)
+RATCHET Iteration 240 / Score: 6663 / Time: 0h:0m:54s (0h:0m:27s left)
+RATCHET Iteration 250 / Score: 6663 / Time: 0h:0m:54s (0h:0m:23s left)
+RATCHET Iteration 260 / Score: 6663 / Time: 0h:0m:54s (0h:0m:21s left)
+RATCHET Iteration 270 / Score: 6663 / Time: 0h:0m:55s (0h:0m:18s left)
+RATCHET Iteration 280 / Score: 6663 / Time: 0h:0m:55s (0h:0m:15s left)
+RATCHET Iteration 290 / Score: 6664 / Time: 0h:0m:55s (0h:0m:13s left)
+RATCHET Iteration 300 / Score: 6663 / Time: 0h:0m:56s (0h:0m:11s left)
+RATCHET Iteration 310 / Score: 6663 / Time: 0h:0m:56s (0h:0m:9s left)
+RATCHET Iteration 320 / Score: 6664 / Time: 0h:0m:57s (0h:0m:7s left)
+RATCHET Iteration 330 / Score: 6662 / Time: 0h:0m:57s (0h:0m:5s left)
+BETTER TREE FOUND at iteration 330: 6662 / CPU time: 58s
+
+RATCHET Iteration 340 / Score: 6663 / Time: 0h:0m:57s (0h:0m:49s left)
+RATCHET Iteration 350 / Score: 6663 / Time: 0h:0m:58s (0h:0m:46s left)
+RATCHET Iteration 360 / Score: 6662 / Time: 0h:0m:58s (0h:0m:43s left)
+RATCHET Iteration 370 / Score: 6662 / Time: 0h:0m:59s (0h:0m:41s left)
+RATCHET Iteration 380 / Score: 6662 / Time: 0h:0m:59s (0h:0m:39s left)
+RATCHET Iteration 390 / Score: 6662 / Time: 0h:0m:59s (0h:0m:36s left)
+RATCHET Iteration 400 / Score: 6662 / Time: 0h:1m:0s (0h:0m:34s left)
+RATCHET Iteration 410 / Score: 6662 / Time: 0h:1m:0s (0h:0m:32s left)
+RATCHET Iteration 420 / Score: 6662 / Time: 0h:1m:0s (0h:0m:30s left)
+RATCHET Iteration 430 / Score: 6662 / Time: 0h:1m:1s (0h:0m:28s left)
+RATCHET Iteration 440 / Score: 6665 / Time: 0h:1m:1s (0h:0m:26s left)
+RATCHET Iteration 450 / Score: 6662 / Time: 0h:1m:2s (0h:0m:24s left)
+RATCHET Iteration 460 / Score: 6662 / Time: 0h:1m:2s (0h:0m:23s left)
+RATCHET Iteration 470 / Score: 6662 / Time: 0h:1m:2s (0h:0m:21s left)
+RATCHET Iteration 480 / Score: 6663 / Time: 0h:1m:3s (0h:0m:19s left)
+RATCHET Iteration 490 / Score: 6662 / Time: 0h:1m:3s (0h:0m:18s left)
+RATCHET Iteration 500 / Score: 6662 / Time: 0h:1m:3s (0h:0m:16s left)
+RATCHET Iteration 510 / Score: 6663 / Time: 0h:1m:4s (0h:0m:15s left)
+RATCHET Iteration 520 / Score: 6662 / Time: 0h:1m:4s (0h:0m:13s left)
+RATCHET Iteration 530 / Score: 6662 / Time: 0h:1m:4s (0h:0m:12s left)
+RATCHET Iteration 540 / Score: 6662 / Time: 0h:1m:5s (0h:0m:10s left)
+RATCHET Iteration 550 / Score: 6663 / Time: 0h:1m:5s (0h:0m:9s left)
+RATCHET Iteration 560 / Score: 6662 / Time: 0h:1m:6s (0h:0m:8s left)
+RATCHET Iteration 570 / Score: 6663 / Time: 0h:1m:6s (0h:0m:6s left)
+RATCHET Iteration 580 / Score: 6662 / Time: 0h:1m:6s (0h:0m:5s left)
+RATCHET Iteration 590 / Score: 6662 / Time: 0h:1m:7s (0h:0m:4s left)
+RATCHET Iteration 600 / Score: 6662 / Time: 0h:1m:7s (0h:0m:3s left)
+RATCHET Iteration 610 / Score: 6663 / Time: 0h:1m:7s (0h:0m:2s left)
+RATCHET Iteration 620 / Score: 6662 / Time: 0h:1m:8s (0h:0m:1s left)
+RATCHET Iteration 630 / Score: 6662 / Time: 0h:1m:8s (0h:0m:0s left)
+Tree 2 score: 6662
+Time: 0h:1m:8s
+BETTER TREE FOUND at iteration 1: 6670 / CPU time: 69s
+
+BETTER TREE FOUND at iteration 4: 6668 / CPU time: 69s
+
+BETTER TREE FOUND at iteration 8: 6664 / CPU time: 69s
+
+RATCHET Iteration 10 / Score: 6671 / Time: 0h:1m:9s
+BETTER TREE FOUND at iteration 18: 6662 / CPU time: 69s
+
+RATCHET Iteration 20 / Score: 6665 / Time: 0h:1m:9s (0h:18m:6s left)
+RATCHET Iteration 30 / Score: 6662 / Time: 0h:1m:9s (0h:11m:31s left)
+RATCHET Iteration 40 / Score: 6662 / Time: 0h:1m:10s (0h:8m:18s left)
+RATCHET Iteration 50 / Score: 6663 / Time: 0h:1m:10s (0h:6m:24s left)
+RATCHET Iteration 60 / Score: 6662 / Time: 0h:1m:10s (0h:5m:9s left)
+RATCHET Iteration 70 / Score: 6662 / Time: 0h:1m:11s (0h:4m:15s left)
+RATCHET Iteration 80 / Score: 6662 / Time: 0h:1m:11s (0h:3m:35s left)
+RATCHET Iteration 90 / Score: 6664 / Time: 0h:1m:12s (0h:3m:4s left)
+RATCHET Iteration 100 / Score: 6662 / Time: 0h:1m:12s (0h:2m:39s left)
+RATCHET Iteration 110 / Score: 6662 / Time: 0h:1m:12s (0h:2m:18s left)
+RATCHET Iteration 120 / Score: 6662 / Time: 0h:1m:13s (0h:2m:1s left)
+RATCHET Iteration 130 / Score: 6662 / Time: 0h:1m:13s (0h:1m:46s left)
+RATCHET Iteration 140 / Score: 6662 / Time: 0h:1m:13s (0h:1m:34s left)
+RATCHET Iteration 150 / Score: 6662 / Time: 0h:1m:14s (0h:1m:23s left)
+RATCHET Iteration 160 / Score: 6662 / Time: 0h:1m:14s (0h:1m:13s left)
+RATCHET Iteration 170 / Score: 6663 / Time: 0h:1m:14s (0h:1m:5s left)
+RATCHET Iteration 180 / Score: 6662 / Time: 0h:1m:15s (0h:0m:57s left)
+RATCHET Iteration 190 / Score: 6663 / Time: 0h:1m:15s (0h:0m:51s left)
+RATCHET Iteration 200 / Score: 6662 / Time: 0h:1m:16s (0h:0m:44s left)
+RATCHET Iteration 210 / Score: 6662 / Time: 0h:1m:16s (0h:0m:39s left)
+RATCHET Iteration 220 / Score: 6663 / Time: 0h:1m:16s (0h:0m:34s left)
+RATCHET Iteration 230 / Score: 6662 / Time: 0h:1m:17s (0h:0m:29s left)
+RATCHET Iteration 240 / Score: 6663 / Time: 0h:1m:17s (0h:0m:25s left)
+RATCHET Iteration 250 / Score: 6662 / Time: 0h:1m:17s (0h:0m:21s left)
+RATCHET Iteration 260 / Score: 6663 / Time: 0h:1m:18s (0h:0m:17s left)
+RATCHET Iteration 270 / Score: 6663 / Time: 0h:1m:18s (0h:0m:13s left)
+RATCHET Iteration 280 / Score: 6662 / Time: 0h:1m:18s (0h:0m:10s left)
+RATCHET Iteration 290 / Score: 6662 / Time: 0h:1m:19s (0h:0m:7s left)
+RATCHET Iteration 300 / Score: 6662 / Time: 0h:1m:19s (0h:0m:4s left)
+RATCHET Iteration 310 / Score: 6663 / Time: 0h:1m:20s (0h:0m:2s left)
+Tree 3 score: 6662
+Scores of best 5 trees: 
+Tree 0: 6662 6662 6662 6662 6662 
+Tree 1: 6662 6662 6662 6662 6662 
+Tree 2: 6662 6662 6662 6662 6662 
+Tree 3: 6662 6662 6662 6662 6662 
+BEST SCORE FOUND : 26648
+
+CPU time used for tree search: 79.580 sec (0h:1m:19s)
+Wall-clock time used for tree search: 79.670 sec (0h:1m:19s)
+Total CPU time used: 80.464 sec (0h:1m:20s)
+Total wall-clock time used: 80.556 sec (0h:1m:20s)
+
+Analysis results written to: 
+  MPBoot report:                 test/dna_M214_295_1836.nex.mpboot
+  Maximum-parsimony  tree:       test/dna_M214_295_1836.nex.treefile
+  Screen log file:               test/dna_M214_295_1836.nex.log
+
+
+Analysis results written to: 
+  MPBoot report:                 test/dna_M214_295_1836.nex.mpboot
+  Maximum-parsimony  tree:       test/dna_M214_295_1836.nex.treefile
+  Screen log file:               test/dna_M214_295_1836.nex.log
+
+
+Analysis results written to: 
+  MPBoot report:                 test/dna_M214_295_1836.nex.mpboot
+  Maximum-parsimony  tree:       test/dna_M214_295_1836.nex.treefile
+  Screen log file:               test/dna_M214_295_1836.nex.log
+
+
+Analysis results written to: 
+  MPBoot report:                 test/dna_M214_295_1836.nex.mpboot
+  Maximum-parsimony  tree:       test/dna_M214_295_1836.nex.treefile
+  Screen log file:               test/dna_M214_295_1836.nex.log
+
+Date and Time: Sun Jan 19 22:37:05 2025

@@ -210,7 +210,7 @@ void IQTree::setParams(Params &params) {
     }
     size_t i;
 
-    if (params.online_bootstrap && params.gbo_replicates > 0) {
+    if (params.online_bootstrap && params.gbo_replicates > 0 && !isSuperTreeUnlinked()) {
         cout << "Generating " << params.gbo_replicates << " samples for bootstrap approximation..." << endl;
         size_t nunit; // either number of patterns or number of sites
         // allocate memory for boot_samples
@@ -320,7 +320,7 @@ void IQTree::setParams(Params &params) {
 	        cout << "Max candidate trees (tau): " << max_candidate_trees << endl;
     }
 
-	if(params.maximum_parsimony){
+	if(params.maximum_parsimony && !isSuperTreeUnlinked()){
 		on_opt_btree = false;
 		on_ratchet_hclimb1 = false;
 		on_ratchet_hclimb2 = false;
@@ -599,7 +599,10 @@ void IQTree::initializePLL(Params &params) {
     }
 
     globalParam = &params;
+    initializePLLSankoff(params);
+}
 
+void IQTree::initializePLLSankoff(Params &params) {
     // Diep: Add initialization for Sankoff if needed
 	if(params.maximum_parsimony && params.sankoff_cost_file){
 		pllCostMatrix = cost_matrix;

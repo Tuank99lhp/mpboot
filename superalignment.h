@@ -125,7 +125,7 @@ public:
 	/**
 		Quit if some sequences contain only gaps or missing data
 	*/
-	//virtual void checkGappySeq(bool force_error = true);
+	virtual void checkGappySeq();
 
 	/**
 		create a non-parametric bootstrap alignment by resampling sites within partitions

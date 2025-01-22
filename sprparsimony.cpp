@@ -3242,6 +3242,17 @@ void _pllComputeRandomizedStepwiseAdditionParsimonyTree(pllInstance * tr, partit
  * @return best parsimony score found
  */
 int pllOptimizeSprParsimony(pllInstance * tr, partitionList * pr, int mintrav, int maxtrav, IQTree *_iqtree){
+
+  if (_iqtree->is_first_call_spr) {
+    first_call = true;
+    bestTreeScoreHits = 0;
+    _iqtree->is_first_call_spr = false;
+  }
+
+  if (first_call) {
+    assert(tr->ti == NULL);
+  }
+
 	int perSiteScores = globalParam->gbo_replicates > 0;
 
 	iqtree = _iqtree; // update pointer to IQTree

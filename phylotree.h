@@ -305,10 +305,10 @@ public:
             set the alignment, important to compute parsimony or likelihood score
             @param alignment associated alignment
      */
-    void setAlignment(Alignment *alignment);
+    virtual void setAlignment(Alignment *alignment);
 
     /** set the root by name */
-    void setRootNode(char *my_root);
+    virtual void setRootNode(char *my_root);
 
 
     /**
@@ -709,7 +709,7 @@ public:
             Read the tree saved with Taxon Names and branch lengths.
             @param tree_string tree string to read from
      */
-    void readTreeString(const string &tree_string);
+    virtual void readTreeString(const string &tree_string);
 
     /**
             Read the tree saved with Taxon Names and branch lengths.
@@ -721,7 +721,7 @@ public:
      * Return the tree string contining taxon names and branch lengths
      * @return
      */
-    string getTreeString();
+    virtual string getTreeString();
 
     /**
      *  Return the sorted topology without branch length, used to compare tree topology
@@ -795,7 +795,7 @@ public:
      * @param out_prefix prefix for .parstree file
      * @param alignment input alignment
      */
-    void computeParsimonyTree(const char *out_prefix, Alignment *alignment);
+    virtual void computeParsimonyTree(const char *out_prefix, Alignment *alignment);
 
     /**
             SLOW VERSION: grow the tree by step-wise addition
@@ -1290,6 +1290,10 @@ public:
      */
     Params* params;
 
+    /**
+     * First call spr
+     */
+    bool is_first_call_spr = true;
 
     /**
             assign the leaf names with the alignment sequence names, using the leaf ID for assignment.

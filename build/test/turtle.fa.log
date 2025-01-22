@@ -1,0 +1,73 @@
+MPBoot version 1.1.1 for Linux 64-bit built Jan 19 2025
+Copyright (c) 2016 Diep Thi Hoang, Le Sy Vinh, Tomas Flouri, Alexandros Stamatakis, Arndt von Haeseler and Bui Quang Minh.
+
+Host:    DESKTOP-A5MQTAL (AVX2, FMA3, 8 GB RAM)
+Command: ./mpboot-avx -s test/turtle.fa
+Seed:    842737 (Using SPRNG - Scalable Parallel Random Number Generator)
+Time:    Sun Jan 19 16:26:42 2025
+Kernel:  AVX
+
+Reading alignment file test/turtle.fa ... Fasta format detected
+Alignment most likely contains DNA/RNA sequences
+Alignment has 16 sequences with 20820 columns and 8574 patterns
+ID   Sequence           #Gap/Ambiguity
+1    protopterus        14004 (67.262%) !!!	4
+2    Anolis             336  (1.614%)	4
+3    Gallus             3    (0.014%)	4
+4    Homo               60   (0.288%)	4
+5    Monodelphis        96   (0.461%)	4
+6    Ornithorhynchus    777  (3.732%)	4
+7    Taeniopygia        438  (2.104%)	4
+8    Xenopus            312  (1.499%)	4
+9    alligator          16761 (80.504%) !!!	4
+10   emys_orbicularis   11856 (56.945%) !!!	4
+11   phrynops           7655 (36.768%)	4
+12   caiman             8548 (41.057%)	4
+13   caretta            7563 (36.326%)	4
+14   python             13570 (65.178%) !!!	4
+15   chelonoidis_nigra  14268 (68.530%) !!!	4
+16   podarcis           15867 (76.210%) !!!	4
+WARNING: 6 sequences contain more than 50% gaps/ambiguity
+**** TOTAL              112114 (33.656%)
+
+Computing random stepwise addition parsimony tree for evaluating patterns...
+Time for random stepwise addition parsimony tree construction: 0.017 seconds
+Parsimony score: 21064
+Reordering patterns in alignment by decreasing order of pattern parsimony... 0.005 seconds
+
+Create initial parsimony tree by phylogenetic likelihood library (PLL)... 0.004 seconds
+
+NOTE: 21.962 MB RAM is required!
+Current best tree score: 21064
+
+Generating 99 parsimony trees... (98 duplicated parsimony trees)
+CPU time: 0
+Finish initializing candidate tree set. Number of distinct locally optimal trees: 2
+Current best score: 21064 / CPU time: 0
+
+Time: 0h:0m:0s
+RATCHET Iteration 10 / Score: 21064 / Time: 0h:0m:0s
+RATCHET Iteration 20 / Score: 21064 / Time: 0h:0m:0s (0h:0m:2s left)
+RATCHET Iteration 30 / Score: 21064 / Time: 0h:0m:0s (0h:0m:1s left)
+RATCHET Iteration 40 / Score: 21064 / Time: 0h:0m:0s (0h:0m:0s left)
+RATCHET Iteration 50 / Score: 21064 / Time: 0h:0m:0s (0h:0m:0s left)
+RATCHET Iteration 60 / Score: 21064 / Time: 0h:0m:0s (0h:0m:0s left)
+RATCHET Iteration 70 / Score: 21064 / Time: 0h:0m:0s (0h:0m:0s left)
+RATCHET Iteration 80 / Score: 21064 / Time: 0h:0m:0s (0h:0m:0s left)
+RATCHET Iteration 90 / Score: 21064 / Time: 0h:0m:1s (0h:0m:0s left)
+RATCHET Iteration 100 / Score: 21064 / Time: 0h:0m:1s (0h:0m:0s left)
+Scores of best 5 trees: 
+21064 21085 
+BEST SCORE FOUND : 21064
+
+CPU time used for tree search: 1.055 sec (0h:0m:1s)
+Wall-clock time used for tree search: 1.057 sec (0h:0m:1s)
+Total CPU time used: 1.099 sec (0h:0m:1s)
+Total wall-clock time used: 1.102 sec (0h:0m:1s)
+
+Analysis results written to: 
+  MPBoot report:                 test/turtle.fa.mpboot
+  Maximum-parsimony  tree:       test/turtle.fa.treefile
+  Screen log file:               test/turtle.fa.log
+
+Date and Time: Sun Jan 19 16:26:43 2025

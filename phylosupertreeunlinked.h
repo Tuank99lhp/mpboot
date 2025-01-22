@@ -30,11 +30,23 @@ public:
 
     void setParams(Params& params);
 
+    void deleteAllPartialLh();
+
+    void initializePLL(Params &params);
+
     void mapTrees();
 
-    void computeParsimonyTree(const char *out_prefix, Alignment *alignment);
+    void initializeAllPartialPars();
 
-    bool isBifurcating(Node *node = NULL, Node *dad = NULL);
+    void clearAllPartialLH();
+
+    int computeParsimony();
+
+    double getBestScore();
+
+    void printBestScores(int numBestScore);
+
+    void computeParsimonyTree(const char *out_prefix, Alignment *alignment);
 
     string getTreeString();
 
@@ -48,10 +60,6 @@ public:
 
     void printResultTree(string suffix = "");
 
-    double treeLength(Node *node = NULL, Node *dad = NULL);
-
-    double treeLengthInternal(double epsilon, Node *node = NULL, Node *dad = NULL);
-
     string doNNISearch(int &nniCount, int &nniSteps);
 
     double doTreeSearch();
@@ -59,6 +67,14 @@ public:
     void summarizeBootstrap(Params &params);
 
     void writeUFBootTrees(Params &params, StrVector &removed_seqs, StrVector &twin_seqs);
+
+    void optimizeAlignments(Params &params);
+
+    void computeInitialPLLTrees(Params &params);
+
+    void initCandidateUnlinkedTreeSet(Params &params, int numInitTrees);
+
+    void reportUnlinkedPhyloAnalysis(Params &params, string &original_model, vector<ModelInfo> &model_info, StrVector &removed_seqs, StrVector &twin_seqs);
 
 };
 

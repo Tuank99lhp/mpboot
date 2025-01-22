@@ -561,7 +561,7 @@ void SplitGraph::saveFile(const char* out_file, InputType file_format, bool omit
     try {
         ofstream out;
         out.exceptions(ios::failbit | ios::badbit);
-        out.open(out_file);
+        out.open(out_file, ios::app);
         if (file_format == IN_NEXUS) 
 			saveFileNexus(out, omit_trivial);
 		else

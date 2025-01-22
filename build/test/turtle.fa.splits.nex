@@ -1,0 +1,68 @@
+#nexus
+
+BEGIN Taxa;
+DIMENSIONS ntax=16;
+TAXLABELS
+[1] 'protopterus'
+[2] 'Anolis'
+[3] 'Gallus'
+[4] 'Homo'
+[5] 'Monodelphis'
+[6] 'Ornithorhynchus'
+[7] 'Taeniopygia'
+[8] 'Xenopus'
+[9] 'alligator'
+[10] 'emys_orbicularis'
+[11] 'phrynops'
+[12] 'caiman'
+[13] 'caretta'
+[14] 'python'
+[15] 'chelonoidis_nigra'
+[16] 'podarcis'
+;
+END; [Taxa]
+
+BEGIN Splits;
+DIMENSIONS ntax=16 nsplits=37;
+FORMAT labels=no weights=yes confidences=no intervals=no;
+MATRIX
+	100	 2,
+	100	 16,
+	57	 2 16,
+	100	 14,
+	100	 2 14 16,
+	100	 3,
+	100	 7,
+	100	 3 7,
+	100	 9,
+	100	 12,
+	100	 9 12,
+	100	 10,
+	100	 15,
+	96	 10 15,
+	100	 13,
+	100	 10 13 15,
+	100	 11,
+	100	 10 11 13 15,
+	85	 9 10 11 12 13 15,
+	100	 1 2 4 5 6 8 14 16,
+	100	 4,
+	100	 5,
+	100	 4 5,
+	100	 6,
+	100	 4 5 6,
+	11	 1 2 8 14 16,
+	100	 1 8,
+	100	 8,
+	100	 1,
+	35	 14 16,
+	2	 13 15,
+	90	 1 4 5 6 8,
+	14	 3 7 9 12,
+	2	 10 13,
+	8	 2 14,
+	0	 3 7 9,
+	0	 10 11 12 13 15,
+;
+END; [Splits]
+

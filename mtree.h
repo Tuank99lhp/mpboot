@@ -151,10 +151,10 @@ public:
             @param out the output stream.
             @param brtype type of branch to print
      */
-    void printTree(ostream & out, int brtype = WT_BR_LEN);
+    virtual void printTree(ostream & out, int brtype = WT_BR_LEN);
 
 
-    string getTreeString();
+    virtual string getTreeString();
 
     /**
             print the tree to the output file in newick format
@@ -251,7 +251,7 @@ public:
             @param in the input stream.
             @param is_rooted (IN/OUT) true if tree is rooted
      */
-    void readTree(istream &in, bool &is_rooted);
+    virtual void readTree(istream &in, bool &is_rooted);
 
     /**
             parse the tree from the input file in newick format

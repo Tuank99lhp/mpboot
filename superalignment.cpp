@@ -203,7 +203,7 @@ Alignment *SuperAlignment::removeIdenticalSeq(string not_remove, bool keep_two, 
 	return aln;
 }
 
-/*
+
 void SuperAlignment::checkGappySeq() {
 	int nseq = getNSeq(), part = 0, i;
 	IntVector gap_only_seq;
@@ -238,7 +238,7 @@ void SuperAlignment::checkGappySeq() {
 		outError("Some sequences (see above) are problematic, please check your alignment again");
 		}
 }
-*/
+
 void SuperAlignment::getSitePatternIndex(IntVector &pattern_index) {
 	int nptn = 0;
 	for (vector<Alignment*>::iterator it = partitions.begin(); it != partitions.end(); it++) {
