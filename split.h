@@ -116,6 +116,8 @@ public:
 	*/
 	int firstTaxon();
 
+	Split lowestBitOnly();
+
 	/**
 		@return TRUE if the set is empty
 	*/
@@ -246,6 +248,12 @@ public:
 		@param sp a split
 	*/
 	Split &operator= (const Split &sp);
+
+	Split operator+(Split &sp);
+
+	Split operator-(Split &sp);
+
+	Split operator*(Split &sp);
 
 	/**
 		subset operator

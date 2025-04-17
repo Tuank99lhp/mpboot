@@ -156,6 +156,14 @@ int Split::firstTaxon() {
 	return -1;
 }
 
+Split Split::lowestBitOnly() {
+	Split sp(ntaxa, 0);
+	int first = firstTaxon();
+	assert(first != -1);
+	sp.addTaxon(first);
+	return sp;
+}
+
 bool Split::isEmpty() {
 	for (iterator it = begin(); it != end(); it++)
 		if (*it != 0) return false;
@@ -384,6 +392,27 @@ Split &Split::operator= (const Split &sp) {
 	vector<UINT>::operator= (sp);
 	weight = sp.weight;
 	return *this;
+}
+
+Split Split::operator+(Split &sp) {
+	assert(sp.ntaxa == ntaxa);
+	Split result(*this);
+	result += sp;
+	return result;
+}
+
+Split Split::operator-(Split &sp) {
+	assert(sp.ntaxa == ntaxa);
+	Split result(*this);
+	result -= sp;
+	return result;
+}
+
+Split Split::operator*(Split &sp) {
+	assert(sp.ntaxa == ntaxa);
+	Split result(*this);
+	result *= sp;
+	return result;
 }
 
 /*
