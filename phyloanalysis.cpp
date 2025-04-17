@@ -24,6 +24,7 @@
 #include <iqtree_config.h>
 #include "phylotree.h"
 #include "phylosupertree.h"
+#include "phylosupertreeunlinked.h"
 #include "phylosupertreeplen.h"
 #include "phyloanalysis.h"
 #include "alignment.h"
@@ -1938,6 +1939,56 @@ void runTreeReconstruction(Params &params, string &original_model, IQTree &iqtre
 
 }
 
+void runOptimizeAndReconstruction(Params &params, IQTree *tree) {
+	string original_model = params.model_name;
+	vector<ModelInfo> model_info;
+
+	resetGlobalParamOnNewAln();
+	if (params.maximum_parsimony) {
+		optimizeAlignment(tree, params);
+	}
+	runTreeReconstruction(params, original_model, *tree, model_info);
+}
+
+void runGeneTreesReconstruction(PhyloSuperTreeUnlinked *stree) {
+	double startCPUTime = getCPUTime();
+	double startRealTime = getRealTime();
+
+	stree->runGeneTreesReconstruction();
+	stree->printGeneTrees();
+
+	cout << "\nTotal CPU time for gene trees reconstruction: "
+			<< convert_time(getCPUTime() - startCPUTime) << " seconds." << endl;
+	cout << "Total wall-clock time for gene trees reconstruction: "
+			<< convert_time(getRealTime() - startRealTime) << " seconds.\n" << endl;
+}
+
+void doSCM(PhyloSuperTreeUnlinked *stree) {
+	double startCPUTime = getCPUTime();
+	double startRealTime = getRealTime();
+
+	stree->doSCM();
+	stree->printSCMTree();
+
+	cout << "\nTotal CPU time for SCM: "
+			<< convert_time(getCPUTime() - startCPUTime) << " seconds." << endl;
+	cout << "Total wall-clock time for SCM: "
+			<< convert_time(getRealTime() - startRealTime) << " seconds.\n" << endl;
+}
+
+void doMRP(PhyloSuperTreeUnlinked *stree) {
+	double startCPUTime = getCPUTime();
+	double startRealTime = getRealTime();
+
+	stree->doMRP();
+	stree->printResultWithMRPTree();
+
+	cout << "\nTotal CPU time for MRP: "
+			<< convert_time(getCPUTime() - startCPUTime) << " seconds." << endl;
+	cout << "Total wall-clock time for MRP: "
+			<< convert_time(getRealTime() - startRealTime) << " seconds.\n" << endl;
+}
+
 
 /**********************************************************
  * STANDARD NON-PARAMETRIC BOOTSTRAP
@@ -2183,7 +2234,13 @@ void runPhyloAnalysis(Params &params) {
 	/****************** read in alignment **********************/
 	if (params.partition_file) {
 		// Partition model analysis
-		if(params.partition_type){
+		if (params.partition_type == 'u') {
+			if (params.gene_trees_file) {
+				assert(0);
+			} else {
+				tree = new PhyloSuperTreeUnlinked(params);
+			}
+		} else if(params.partition_type){
 			// since nni5 does not work yet, stop the programm
 			if(params.nni5)
 				outError("-nni5 option is unsupported yet for proportitional partition model. please use -nni1 option");
@@ -2223,7 +2280,20 @@ void runPhyloAnalysis(Params &params) {
 		alignment->concatenateAlignment(&aln);
 	}
 
-	if (params.aln_output) {
+	if (params.partition_type == 'u') {
+		PhyloSuperTreeUnlinked *stree = (PhyloSuperTreeUnlinked*) tree;
+
+		if (!params.gene_trees_file) {
+			runGeneTreesReconstruction(stree);
+		}
+
+		if (params.strict_consensus_merger) {
+			doSCM(stree);
+		} else if (params.mrp_type != MRP_NONE) {
+			doMRP(stree);
+		}
+
+	} else if (params.aln_output) {
 		/************ convert alignment to other format and write to output file *************/
 		convertAlignment(params, tree);
 	} else if (params.gbo_replicates > 0 && params.user_file && params.second_tree) {

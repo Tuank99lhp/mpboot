@@ -117,6 +117,8 @@ void printSiteParsimonyUserTree(Params &params);
  */
 void optimizeAlignment(IQTree * & tree, Params & params);
 
+void runOptimizeAndReconstruction(Params &params, IQTree *tree);
+
 void testCompConsensus(const char * infile, const char * outfile, Params *params);
 
 string computeConsensusTreeNoFileIO(StringIntMap& input_trees, IntVector & weight, int max_count,
