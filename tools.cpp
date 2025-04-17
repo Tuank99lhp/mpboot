@@ -630,6 +630,9 @@ void parseArg(int argc, char *argv[], Params &params) {
     params.siteLL_file = NULL; //added by MA
     params.partition_file = NULL;
     params.partition_type = 0;
+	params.strict_consensus_merger = false;
+	params.mrp_type = MRP_NONE;
+	params.gene_trees_file = NULL;
     params.remove_empty_seq = true;
     params.terrace_aware = true;
     params.sequence_type = NULL;
@@ -1438,6 +1441,38 @@ void parseArg(int argc, char *argv[], Params &params) {
 					throw "Use -spj <type of partition model>";
 				params.partition_file = argv[cnt];
 				params.partition_type = 'j';
+				continue;
+			}
+			if (strcmp(argv[cnt], "-S") == 0) {
+                cnt++;
+                if (cnt >= argc)
+                    throw "Use -S <partition_file>";
+                params.partition_file = argv[cnt];
+                params.partition_type = 'u';
+                params.ignore_identical_seqs = false;
+                continue;
+            }
+			if (strcmp(argv[cnt], "-scm") == 0) {
+                params.strict_consensus_merger = true;
+                continue;
+            }
+			if (strcmp(argv[cnt], "-bmrp") == 0) {
+				params.mrp_type = MRP_BEST;
+                continue;
+            }
+			if (strcmp(argv[cnt], "-gmrp") == 0) {
+				params.mrp_type = MRP_GREEDY;
+                continue;
+            }
+			if (strcmp(argv[cnt], "-rmrp") == 0) {
+				params.mrp_type = MRP_RANDOM;
+                continue;
+            }
+			if (strcmp(argv[cnt], "-gene_trees_file") == 0) {
+				cnt++;
+				if (cnt >= argc)
+					throw "Use -gene_trees_file <gene_trees_file>";
+				params.gene_trees_file = argv[cnt];
 				continue;
 			}
 			if (strcmp(argv[cnt], "-keep_empty_seq") == 0) {

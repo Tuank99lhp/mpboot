@@ -250,6 +250,16 @@ enum TreeGenType {
 };
 
 /**
+        type of MRP
+        MRP_BEST - best tree
+        MRP_GREEDY - greedy consensus of candidate trees
+        MRP_RANDOM - random candidate tree
+ */
+enum MRPType {
+    MRP_NONE, MRP_BEST, MRP_GREEDY, MRP_RANDOM
+};
+
+/**
         when writing tree:
                 WT_BR_LEN - output branch length
                 WT_BR_CLADE - put branch length into internal node name
@@ -615,8 +625,25 @@ struct Params {
      * 		0 (NULL) for separate edge length (default)
      * 		'p' for proportional edge length
      * 		'j' for joint edge length
+     *          'u' for unlinked/separate tree topologies between partitions
      */
     char partition_type;
+
+    /**
+     *      TRUE to use the strict consensus tree for gene trees
+     */
+    bool strict_consensus_merger;
+
+    /**
+     *      Type of output tree for MRP
+     */
+    MRPType mrp_type;
+
+    /**
+     *      File containing the gene trees
+     *      If NULL, the program needs aln_file and partition_file to process
+     */
+    char *gene_trees_file;
 
     /** remove all-gap sequences in partition model to account for terrace default: TRUE */
     bool remove_empty_seq;
