@@ -447,6 +447,34 @@ Alignment::Alignment(char *filename, char *sequence_type, InputType &intype) : v
 
 }
 
+Alignment::Alignment(StrVector &seq_names, StrVector &sequences, char *sequence_type) : vector<Pattern>() {
+    num_states = 0;
+    frac_const_sites = 0.0;
+    codon_table = NULL;
+    genetic_code = NULL;
+    non_stop_codon = NULL;
+    seq_type = SEQ_UNKNOWN;
+    STATE_UNKNOWN = 126;
+
+    this->seq_names = seq_names;
+
+    buildPattern(sequences, sequence_type, seq_names.size(), sequences.front().length());
+
+    if (getNSeq() < 3)
+        outError("Alignment must have at least 3 sequences");
+
+    cout << "Alignment has " << getNSeq() << " sequences with " << getNSite() <<
+         " columns and " << getNPattern() << " patterns"<< endl;
+    buildSeqStates();
+    checkSeqName();
+    // OBSOLETE: identical sequences are handled later
+//	checkIdenticalSeq();
+    //cout << "Number of character states is " << num_states << endl;
+    //cout << "Number of patterns = " << size() << endl;
+    countConstSite();
+    //cout << "Fraction of constant sites: " << frac_const_sites << endl;
+}
+
 void Alignment::buildSeqStates(bool add_unobs_const) {
 	string unobs_const;
 	if (add_unobs_const) unobs_const = getUnobservedConstPatterns();

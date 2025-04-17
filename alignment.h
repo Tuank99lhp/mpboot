@@ -61,6 +61,14 @@ public:
     Alignment(char *filename, char *sequence_type, InputType &intype);
 
     /**
+        constructor
+        @param seq_names sequence names
+        @param sequences sequences
+        @param sequence_type type of the sequence, either "BIN", "DNA", "AA", or NULL
+     */
+    Alignment(StrVector &seq_names, StrVector &sequences, char *sequence_type);
+
+    /**
             destructor
      */
     virtual ~Alignment();
