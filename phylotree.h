@@ -359,6 +359,10 @@ public:
         return false;
     }
 
+    virtual bool isSuperTreeUnlinked() {
+        return false;
+    }
+
     virtual bool isParsimonyTree() {
         return false;
     }

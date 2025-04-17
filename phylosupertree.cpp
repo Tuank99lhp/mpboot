@@ -22,6 +22,7 @@
 #include "superalignmentpairwise.h"
 #include "msetsblock.h"
 #include "myreader.h"
+#include "genetree.h"
 
 PhyloSuperTree::PhyloSuperTree()
  : IQTree()
@@ -46,7 +47,7 @@ PhyloSuperTree::PhyloSuperTree(SuperAlignment *alignment, PhyloSuperTree *super_
 	aln = alignment;
 }
 
-void PhyloSuperTree::readPartition(Params &params) {
+void PhyloSuperTree::readPartition(Params &params, bool is_gene_tree) {
 	try {
 		ifstream in;
 		in.exceptions(ios::failbit | ios::badbit);
@@ -80,7 +81,12 @@ void PhyloSuperTree::readPartition(Params &params) {
 				delete part_aln;
 				part_aln = new_aln;
 			}
-			PhyloTree *tree = new PhyloTree(part_aln);
+			PhyloTree *tree;
+			if (is_gene_tree) {
+				tree = new GeneTree(part_aln);
+			} else {
+				tree = new PhyloTree(part_aln);
+			}
 			push_back(tree);
 			params = origin_params;
 		}
@@ -98,7 +104,7 @@ void PhyloSuperTree::readPartition(Params &params) {
 
 }
 
-void PhyloSuperTree::readPartitionNexus(Params &params) {
+void PhyloSuperTree::readPartitionNexus(Params &params, bool is_gene_tree) {
 	Params origin_params = params;
 	MSetsBlock *sets_block = new MSetsBlock();
     MyReader nexus(params.partition_file);
@@ -164,7 +170,12 @@ void PhyloSuperTree::readPartitionNexus(Params &params) {
 		    new_aln->buildSeqStates();
 
 			if (part_aln != new_aln && part_aln != input_aln) delete part_aln;
-			PhyloTree *tree = new PhyloTree(new_aln);
+			PhyloTree *tree;
+			if (is_gene_tree) {
+				tree = new GeneTree(new_aln);
+			} else {
+				tree = new PhyloTree(new_aln);
+			}
 			push_back(tree);
 			params = origin_params;
 			cout << new_aln->getNSeq() << " sequences and " << new_aln->getNSite() << " sites extracted" << endl;
@@ -206,14 +217,14 @@ void PhyloSuperTree::printPartition(const char *filename) {
 
 }
 
-PhyloSuperTree::PhyloSuperTree(Params &params) :  IQTree() {
+PhyloSuperTree::PhyloSuperTree(Params &params, bool is_gene_tree) :  IQTree() {
 	totalNNIs = evalNNIs = 0;
 
 	cout << "Reading partition model file " << params.partition_file << " ..." << endl;
 	if (detectInputFile(params.partition_file) == IN_NEXUS)
-		readPartitionNexus(params);
+		readPartitionNexus(params, is_gene_tree);
 	else
-		readPartition(params);
+		readPartition(params, is_gene_tree);
 	if (part_info.empty())
 		outError("No partition found");
 
