@@ -300,7 +300,9 @@ GeneTree *StrictConsensusMerge::getSCMTree() {
         assert(tree1Index != -1 && tree2Index != -1);
 
         pairwiseMerger(trees[tree1Index], trees[tree2Index]);
-        
+
+        // Set root as seedNode for deleting unnecessary node
+        trees[tree2Index]->root = trees[tree2Index]->seedNode;
         swap(trees[tree2Index], trees.back());
         delete trees.back();
         trees.pop_back();

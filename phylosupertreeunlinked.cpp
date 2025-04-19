@@ -11,9 +11,6 @@ PhyloSuperTreeUnlinked::PhyloSuperTreeUnlinked(Params &params): PhyloSuperTree(p
     if (params.aln_file) {
         conAln = new Alignment(params.aln_file, params.sequence_type, params.intype);
         conAln->checkGappySeq();
-    } else {
-        // Temporarily not supporting
-        assert(false);
     }
 }
 
@@ -46,8 +43,10 @@ StrVector PhyloSuperTreeUnlinked::getAllSeqNames() {
     } else {
         for (auto it = begin(); it != end(); it++) {
             GeneTree* tree = (GeneTree*)(*it);
-            for (int i = 0; i < tree->aln->getNSeq(); ++i) {
-                string seqName = tree->aln->getSeqName(i);
+            NodeVector taxa;
+            tree->getTaxa(taxa);
+            for (auto taxon: taxa) {
+                string seqName = taxon->name;
                 if (seqNameToIndex.find(seqName) == seqNameToIndex.end()) {
                     allSeqNames.push_back(seqName);
                     seqNameToIndex[seqName] = allSeqNames.size() - 1;

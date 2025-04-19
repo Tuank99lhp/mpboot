@@ -217,8 +217,34 @@ void PhyloSuperTree::printPartition(const char *filename) {
 
 }
 
+void PhyloSuperTree::readGeneTreesFile(Params &params) {
+	ifstream in;
+	in.exceptions(ios::failbit | ios::badbit);
+	in.open(params.gene_trees_file);
+	in.exceptions(ios::badbit);
+
+	cout << "Reading gene trees file " << params.gene_trees_file << " ..." << endl;
+
+	string line;
+
+	for (; !in.eof();) {
+        getline(in, line);
+        if (line == "") continue;
+		push_back(new GeneTree(line));
+    }
+
+    in.clear();
+    in.exceptions(ios::failbit | ios::badbit);
+    in.close();
+}
+
 PhyloSuperTree::PhyloSuperTree(Params &params, bool is_gene_tree) :  IQTree() {
 	totalNNIs = evalNNIs = 0;
+
+	if (params.gene_trees_file) {
+		readGeneTreesFile(params);		
+		return;
+	}
 
 	cout << "Reading partition model file " << params.partition_file << " ..." << endl;
 	if (detectInputFile(params.partition_file) == IN_NEXUS)

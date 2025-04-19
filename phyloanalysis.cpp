@@ -2232,14 +2232,10 @@ void runPhyloAnalysis(Params &params) {
 	IQTree *tree;
 
 	/****************** read in alignment **********************/
-	if (params.partition_file) {
+	if (params.partition_file || params.gene_trees_file) {
 		// Partition model analysis
 		if (params.partition_type == 'u') {
-			if (params.gene_trees_file) {
-				assert(0);
-			} else {
-				tree = new PhyloSuperTreeUnlinked(params);
-			}
+			tree = new PhyloSuperTreeUnlinked(params);
 		} else if(params.partition_type){
 			// since nni5 does not work yet, stop the programm
 			if(params.nni5)

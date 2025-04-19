@@ -51,6 +51,8 @@ public:
 
     ~PhyloSuperTree();
 
+    void readGeneTreesFile(Params &params);
+
     /** read partition model file */
     void readPartition(Params &params, bool is_gene_tree = false);
 

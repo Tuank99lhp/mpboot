@@ -1444,6 +1444,9 @@ void parseArg(int argc, char *argv[], Params &params) {
 				continue;
 			}
 			if (strcmp(argv[cnt], "-S") == 0) {
+				if (params.gene_trees_file != NULL) {
+					throw "Please use only one of -S or -gene_trees_file";
+				}
                 cnt++;
                 if (cnt >= argc)
                     throw "Use -S <partition_file>";
@@ -1469,10 +1472,14 @@ void parseArg(int argc, char *argv[], Params &params) {
                 continue;
             }
 			if (strcmp(argv[cnt], "-gene_trees_file") == 0) {
+				if (params.partition_file != NULL) {
+					throw "Please use only one of -S or -gene_trees_file";
+				}
 				cnt++;
 				if (cnt >= argc)
 					throw "Use -gene_trees_file <gene_trees_file>";
 				params.gene_trees_file = argv[cnt];
+                params.partition_type = 'u';
 				continue;
 			}
 			if (strcmp(argv[cnt], "-keep_empty_seq") == 0) {
@@ -2761,7 +2768,7 @@ void parseArg(int argc, char *argv[], Params &params) {
         }
 
     } // for
-    if (!params.user_file && !params.aln_file && !params.ngs_file && !params.ngs_mapped_reads && !params.partition_file)
+    if (!params.user_file && !params.aln_file && !params.ngs_file && !params.ngs_mapped_reads && !params.partition_file && !params.gene_trees_file)
 #ifdef IQ_TREE
 //        usage_iqtree(argv, false);
 //		usage_mpboot(argv, false);
@@ -2776,6 +2783,8 @@ void parseArg(int argc, char *argv[], Params &params) {
             params.out_prefix = params.partition_file;
         else if (params.aln_file)
             params.out_prefix = params.aln_file;
+		else if (params.gene_trees_file)
+			params.out_prefix = params.gene_trees_file;
         else if (params.ngs_file)
             params.out_prefix = params.ngs_file;
         else if (params.ngs_mapped_reads)
