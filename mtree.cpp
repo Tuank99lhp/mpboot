@@ -771,12 +771,17 @@ void MTree::getAllNodesInSubtree(Node *node, Node *dad, NodeVector &nodeList) {
 }
 
 int MTree::getNumTaxa(Node *node, Node *dad) {
-	// This function is WRONG because it will always return 1 if calling from the ROOT
-    if (!node) node = root;
-    if (node->isLeaf()) {
-        return 1;
-    }
     int numLeaf = 0;
+    if (!node) {
+        node = root;
+        if (node->isLeaf()) {
+            numLeaf = 1;
+        }
+    } else {
+        if (node->isLeaf()) {
+            return 1;
+        }
+    }
     FOR_NEIGHBOR_IT(node, dad, it) {
         numLeaf += getNumTaxa((*it)->node, node);
     }
