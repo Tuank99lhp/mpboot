@@ -50,6 +50,8 @@ public:
 
     void setRootLeaf(char *my_root);
 
+    void dfsFixTree(GeneNode *node, GeneNode *parent);
+
     Params treeParams;
 
     int totalLeafNum = 0;

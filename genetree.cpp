@@ -13,6 +13,25 @@ GeneTree::GeneTree(const string &treeString) : IQTree() {
     
     seedNode = (GeneNode*) root->neighbors[0]->node;
     assert(!seedNode->isLeaf());
+
+    // Collapse all node has degree 2, except the seedNode
+    dfsFixTree(seedNode, NULL);
+}
+
+void GeneTree::dfsFixTree(GeneNode *node, GeneNode *parent) {
+    node->parent = parent;
+    
+    if (node->isLeaf()) {
+        return;
+    }
+
+    for (auto child: node->getChildren()) {
+        dfsFixTree(child, node);
+    }
+
+    if (node->parent != NULL && node->degree() == 2) {
+        collapseEdge(node->parent, node);
+    }
 }
 
 GeneTree::~GeneTree() {
@@ -150,8 +169,6 @@ void GeneTree::deroot() {
     }
 
     cout << "Derooting tree" << endl;
-
-    assert(rooted);
 
     GeneNode *child0 = (GeneNode*) seedNode->neighbors[0]->node;
     GeneNode *child1 = (GeneNode*) seedNode->neighbors[1]->node;
