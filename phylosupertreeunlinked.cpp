@@ -76,7 +76,7 @@ void PhyloSuperTreeUnlinked::printGeneTrees() {
     
     for (auto it = begin(); it != end(); it++) {
         GeneTree* tree = (GeneTree*)(*it);
-        tree->setRootNode(params->root);
+        tree->setRootLeaf(NULL);
         tree->printResultTree(treeFile, true);
     }
 }
@@ -107,8 +107,7 @@ void PhyloSuperTreeUnlinked::buildMRPMatrix() {
         vector<pair<int, int>> eulerInternalBranch;
         map<string, int> leafIndex;
 
-        // TODO: check aln
-        tree->setRootNode(NULL);
+        tree->setRootLeaf(NULL);
         assert(tree->root->isLeaf());
 
         leafIndex[tree->root->name] = 0;

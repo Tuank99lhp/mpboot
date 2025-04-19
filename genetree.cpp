@@ -221,3 +221,48 @@ void GeneTree::readTreeString(const string &treeString) {
 void GeneTree::printResultTree(string fileName, bool isAppend) {
     printTree(fileName.c_str(), WT_SORT_TAXA | WT_NEWLINE | (isAppend ? WT_APPEND : 0));
 }
+
+void GeneTree::reInitializeTree(Node *node, Node* dad) {
+    if (!node) {
+        setRootLeaf(NULL);
+        node = root;
+        nodeNum = getNumTaxa();
+        leafNum = 0;
+        branchNum = 0;
+    }
+
+    if (!node->isLeaf()) {
+        node->id = nodeNum;
+        nodeNum++;
+    } else {
+        node->id = leafNum;
+        leafNum++;
+    }
+
+    FOR_NEIGHBOR_IT(node, dad, it) {
+        (*it)->id = branchNum;
+        (*it)->node->findNeighbor(node)->id = branchNum;
+        branchNum++;
+        reInitializeTree((*it)->node, node);
+    }
+}
+
+void GeneTree::setRootLeaf(char *my_root) {
+    string root_name;
+    if (my_root) {
+        root_name = my_root;
+    } else {
+        if (root && root->isLeaf()) {
+            return;
+        }
+        if (aln) {
+            root_name = aln->getSeqName(0);
+        } else {
+            root = findNodeID(0);
+            assert(root && root->isLeaf());
+            return;
+        }
+    }
+    root = findLeafName(root_name);
+    assert(root);
+}

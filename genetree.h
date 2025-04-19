@@ -46,6 +46,10 @@ public:
 
     void printResultTree(string fileName, bool isAppend);
 
+    void reInitializeTree(Node *node = NULL, Node* dad = NULL);
+
+    void setRootLeaf(char *my_root);
+
     Params treeParams;
 
     int totalLeafNum = 0;
