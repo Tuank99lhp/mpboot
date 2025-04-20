@@ -27,32 +27,6 @@ int StrictConsensusMerge::getOverlap(GeneTree *tree1, GeneTree *tree2) {
     return ans.countTaxa();
 }
 
-void StrictConsensusMerge::getNextPair(int &tree1Index, int &tree2Index) {
-    tree1Index = tree2Index = -1;
-
-    if (trees.size() < 2) {
-        cout << "SCM: Not enough trees to merge" << endl;
-        return;
-    }
-
-    int maxIntersection = 3;
-    for (int i = 0; i < trees.size(); ++i) {
-        for (int j = i + 1; j < trees.size(); ++j) {
-            int intersection = getOverlap(trees[i], trees[j]);
-            if (intersection > maxIntersection) {
-                maxIntersection = intersection;
-                tree1Index = i;
-                tree2Index = j;
-            }
-        }
-    }
-
-    if (maxIntersection < 4) {
-        cout << "SCM: Insufficient overlap for merger" << endl;
-        return;
-    }
-}
-
 void StrictConsensusMerge::rerootOnLowestCommonIndexPath(GeneTree *tree, Split commonMask) {
     Split l = commonMask.lowestBitOnly();
     assert(commonMask.countTaxa() > 2);
@@ -293,22 +267,73 @@ GeneTree *StrictConsensusMerge::getSCMTree() {
     }
     cout << "SCM: Running SCM..." << endl;
 
+    int nTrees = trees.size();
+    vector<vector<pair<int, int>>> treePairsScore(nTrees, vector<pair<int, int>>());
+    
+    for (int i = 0; i < nTrees; ++i) {
+        for (int j = i + 1; j < nTrees; ++j) {
+            treePairsScore[i].push_back(make_pair(getOverlap(trees[i], trees[j]), j));
+        }
+        sort(treePairsScore[i].begin(), treePairsScore[i].end());
+    }
+
     int numMergers = trees.size() - 1;
-    for (int i = 0; i < numMergers; ++i) {
+    for (int iter = 0; iter < numMergers; ++iter) {
         int tree1Index, tree2Index;
-        getNextPair(tree1Index, tree2Index);
+        tree1Index = tree2Index = -1;
+
+        int maxIntersection = 3;
+        for (int i = 0; i < treePairsScore.size(); ++i) {
+            while (!treePairsScore[i].empty()) {
+                int j = treePairsScore[i].back().second;
+                if (trees[j] != NULL) {
+                    break;
+                }
+                treePairsScore[i].pop_back();
+            }
+            if (!treePairsScore[i].empty()) {
+                int intersection = treePairsScore[i].back().first;
+                if (intersection > maxIntersection) {
+                    maxIntersection = intersection;
+                    tree1Index = i;
+                    tree2Index = treePairsScore[i].back().second;
+                }
+            }
+        }
+
+        if (maxIntersection < 4) {
+            cout << "SCM: Insufficient overlap for merger" << endl;
+            assert(0);
+        }
+
         assert(tree1Index != -1 && tree2Index != -1);
 
         pairwiseMerger(trees[tree1Index], trees[tree2Index]);
 
         // Set root as seedNode for deleting unnecessary node
         trees[tree2Index]->root = trees[tree2Index]->seedNode;
-        swap(trees[tree2Index], trees.back());
-        delete trees.back();
-        trees.pop_back();
+        delete trees[tree2Index];
+        
+        trees.push_back(trees[tree1Index]);
+        trees[tree1Index] = trees[tree2Index] = NULL;
+        
+        treePairsScore.push_back(vector<pair<int, int>>());
+        treePairsScore[tree1Index].clear();
+        treePairsScore[tree2Index].clear();
+        
+        for (int j = 0; j < trees.size() - 1; ++j) {
+            if (trees[j] == NULL) {
+                continue;
+            }
+            treePairsScore.back().push_back(make_pair(getOverlap(trees.back(), trees[j]), j));
+        }
+        sort(treePairsScore.back().begin(), treePairsScore.back().end());
     }
 
-    assert(trees.size() == 1);
     cout << "SCM: Merged trees successfully" << endl;
-    return trees[0];
+    // for (int i = 0; i < trees.size() - 1; ++i) {
+    //     assert(trees[i] == NULL);
+    // }
+    // assert(trees.back() != NULL);
+    return trees.back();
 }
