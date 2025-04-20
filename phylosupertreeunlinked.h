@@ -9,6 +9,8 @@ class PhyloSuperTreeUnlinked : public PhyloSuperTree {
 public:
     PhyloSuperTreeUnlinked(Params &params);
 
+    PhyloSuperTreeUnlinked(Params &params, const StrVector &sourceTrees);
+
     ~PhyloSuperTreeUnlinked();
 
     bool isSuperTreeUnlinked() override {
@@ -30,8 +32,6 @@ public:
     void printResultWithMRPTree();
 
     void doSCM();
-
-    void printSCMTree();
 
     Alignment *conAln = NULL;
 

@@ -46,11 +46,27 @@ public:
 
     void printResultTree(string fileName, bool isAppend);
 
-    void reInitializeTree(Node *node = NULL, Node* dad = NULL);
+    void reInitializeTree(GeneNode *node = NULL, GeneNode* parent = NULL);
+
+    GeneNode* getAnyOtherLeaf(GeneNode *node = NULL, GeneNode *parent = NULL);
 
     void setRootLeaf(char *my_root);
 
     void dfsFixTree(GeneNode *node, GeneNode *parent);
+
+    void getPolytomies(vector<GeneNode*> &polytomies, GeneNode *node = NULL, GeneNode *parent = NULL);
+
+    void getRelabelMap(map<string, string> &relabel, map<string, GeneNode*> &delabel, int &label, GeneNode *node, GeneNode *parent = NULL);
+
+    void relabelAndCollapse(const map<string, string> &relabel);
+
+    void relabelTree(const map<string, string> &relabel, GeneNode *node = NULL, GeneNode *parent = NULL);
+
+    void delabelTree(map<string, GeneNode*> &delabel, GeneNode *node = NULL, GeneNode *parent = NULL);
+
+    void deleteDuplicateNode(GeneNode *node = NULL, GeneNode *parent = NULL);
+
+    void doubleCheckUniqueName(map<string, int> &checkUniqueLabel, GeneNode *node = NULL, GeneNode *parent = NULL);
 
     Params treeParams;
 

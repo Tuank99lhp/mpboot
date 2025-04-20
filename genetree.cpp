@@ -168,7 +168,7 @@ void GeneTree::deroot() {
         return;
     }
 
-    cout << "Derooting tree" << endl;
+    // cout << "Derooting tree" << endl;
 
     GeneNode *child0 = (GeneNode*) seedNode->neighbors[0]->node;
     GeneNode *child1 = (GeneNode*) seedNode->neighbors[1]->node;
@@ -239,29 +239,41 @@ void GeneTree::printResultTree(string fileName, bool isAppend) {
     printTree(fileName.c_str(), WT_SORT_TAXA | WT_NEWLINE | (isAppend ? WT_APPEND : 0));
 }
 
-void GeneTree::reInitializeTree(Node *node, Node* dad) {
+void GeneTree::reInitializeTree(GeneNode *node, GeneNode* parent) {
     if (!node) {
         setRootLeaf(NULL);
-        node = root;
+        node = (GeneNode*) root;
         nodeNum = getNumTaxa();
         leafNum = 0;
         branchNum = 0;
     }
 
-    if (!node->isLeaf()) {
-        node->id = nodeNum;
-        nodeNum++;
-    } else {
-        node->id = leafNum;
-        leafNum++;
-    }
+    node->id = (node->isLeaf() ? leafNum++ : nodeNum++);
 
-    FOR_NEIGHBOR_IT(node, dad, it) {
+    FOR_NEIGHBOR_IT(node, parent, it) {
         (*it)->id = branchNum;
         (*it)->node->findNeighbor(node)->id = branchNum;
         branchNum++;
-        reInitializeTree((*it)->node, node);
+        reInitializeTree((GeneNode*)(*it)->node, node);
     }
+}
+
+GeneNode* GeneTree::getAnyOtherLeaf(GeneNode *node, GeneNode *parent) {
+    if (!node) {
+        assert(root);
+        node = (GeneNode*) root;
+    } else if (node->isLeaf()) {
+        return (node->name != root->name) ? node : NULL;
+    }
+
+    FOR_NEIGHBOR_IT(node, parent, it) {
+        GeneNode *child = (GeneNode*) (*it)->node;
+        GeneNode *leaf = getAnyOtherLeaf(child, node);
+        if (leaf) {
+            return leaf;
+        }
+    }
+    return NULL;
 }
 
 void GeneTree::setRootLeaf(char *my_root) {
@@ -275,11 +287,174 @@ void GeneTree::setRootLeaf(char *my_root) {
         if (aln) {
             root_name = aln->getSeqName(0);
         } else {
-            root = findNodeID(0);
+            root = getAnyOtherLeaf();
             assert(root && root->isLeaf());
             return;
         }
     }
     root = findLeafName(root_name);
     assert(root);
+}
+
+void GeneTree::getPolytomies(vector<GeneNode*> &polytomies, GeneNode *node, GeneNode *parent) {
+    if (!node) {
+        node = (GeneNode*) root;
+    }
+
+    if (node->degree() > 3) {
+        polytomies.push_back(node);
+    }
+
+    FOR_NEIGHBOR_IT(node, parent, it) {
+        GeneNode *child = (GeneNode*) (*it)->node;
+        getPolytomies(polytomies, child, node);
+    }
+}
+
+void GeneTree::getRelabelMap(map<string, string> &relabel, map<string, GeneNode*> &delabel, int &label, GeneNode *node, GeneNode *parent) {
+    node->parent = parent;
+
+    if (node->isLeaf()) {
+        relabel[node->name] = to_string(label);
+        assert(parent != NULL);
+    }
+
+    for (auto child: node->getChildren()) {
+        if (parent == NULL) {
+            delabel[to_string(++label)] = child;
+        }
+        getRelabelMap(relabel, delabel, label, child, node);
+    }
+}
+
+void GeneTree::relabelAndCollapse(const map<string, string> &relabel) {
+    setRootLeaf(NULL);
+    relabelTree(relabel);
+    deleteDuplicateNode();
+    GeneNode *newRoot = getAnyOtherLeaf();
+    if (newRoot != NULL) {
+        assert(root->name != newRoot->name);
+        root = newRoot;
+        deleteDuplicateNode();
+    } else {
+        assert(getNumTaxa() <= 2);
+    }
+    reInitializeTree();
+    if (leafNum > 2) {
+        map<string, int> checkUniqueLabel;
+        doubleCheckUniqueName(checkUniqueLabel);
+    }
+}
+
+void GeneTree::doubleCheckUniqueName(map<string, int> &checkUniqueLabel, GeneNode *node, GeneNode *parent) {
+    if (!node) {
+        node = (GeneNode*) root;
+    }
+
+    if (node->isLeaf()) {
+        assert(checkUniqueLabel.find(node->name) == checkUniqueLabel.end());
+        checkUniqueLabel[node->name] = 1;
+    }
+
+    FOR_NEIGHBOR_IT(node, parent, it) {
+        GeneNode *child = (GeneNode*) (*it)->node;
+        doubleCheckUniqueName(checkUniqueLabel, child, node);
+    }
+}
+
+void GeneTree::relabelTree(const map<string, string> &relabel, GeneNode *node, GeneNode *parent) {
+    if (!node) {
+        node = (GeneNode*) root;
+    }
+
+    if (node->isLeaf()) {
+        assert(relabel.find(node->name) != relabel.end());
+        node->name = relabel.at(node->name);
+    }
+
+    FOR_NEIGHBOR_IT(node, parent, it) {
+        GeneNode *child = (GeneNode*) (*it)->node;
+        relabelTree(relabel, child, node);
+    }
+}
+
+void GeneTree::delabelTree(map<string, GeneNode*> &delabel, GeneNode *node, GeneNode *parent) {
+    if (!node) {
+        assert(root && root->isLeaf());
+        node = (GeneNode*) root->neighbors[0]->node;
+    }
+
+    node->parent = parent;
+
+    if (node->isLeaf()) {
+        assert(delabel.find(node->name) != delabel.end());
+        GeneNode *subtree = delabel[node->name];
+        delabel.erase(node->name);
+
+        assert(subtree->parent != NULL && parent != NULL);
+        
+        subtree->parent->removeChild(subtree);
+        parent->removeChild(node);
+        parent->addChild(subtree);
+        
+        delete node;
+        return;
+    }
+    
+    for (auto child: node->getChildren()) {
+        delabelTree(delabel, child, node);
+    }
+
+    if (parent == NULL && delabel.empty() == false) {
+        for (auto [_, subtree]: delabel) {
+            assert(subtree->parent != NULL);
+            subtree->parent->removeChild(subtree);
+            node->addChild(subtree);
+        }
+        delabel.clear();
+    }
+}
+
+void GeneTree::deleteDuplicateNode(GeneNode *node, GeneNode *parent) {
+    if (!node) {
+        node = (GeneNode*) root;
+    } else if (node->isLeaf()) {
+        node->parent = parent;
+        return;
+    }
+    
+    node->parent = parent;
+
+    for (auto child: node->getChildren()) {
+        deleteDuplicateNode(child, node);
+    }
+
+    bool doDelete = true;
+
+    GeneNode *prevChild = NULL;
+
+    for (auto child: node->getChildren()) {
+        if (child->isLeaf() == false) {
+            doDelete = false;
+            break;
+        }
+
+        if (prevChild == NULL) {
+            prevChild = child;
+        } else if (child->name != prevChild->name) {
+            doDelete = false;
+            break;
+        }
+    }
+
+    if (doDelete && parent != NULL) {
+        parent->removeChild(node);
+        node->removeChild(prevChild);
+        parent->addChild(prevChild);
+
+        for (auto child: node->getChildren()) {
+            delete child;
+        }
+        delete node;
+    }
 }

@@ -12,6 +12,21 @@ PhyloSuperTreeUnlinked::PhyloSuperTreeUnlinked(Params &params): PhyloSuperTree(p
         conAln = new Alignment(params.aln_file, params.sequence_type, params.intype);
         conAln->checkGappySeq();
     }
+
+    if (params.gene_trees_file) {
+        // Print gene trees here because we need bifurcating trees
+        printGeneTrees();
+    }
+}
+
+PhyloSuperTreeUnlinked::PhyloSuperTreeUnlinked(Params &params, const StrVector &sourceTrees): PhyloSuperTree() {
+    this->params = &params;
+
+    for (auto treeString: sourceTrees) {
+        GeneTree* tree = new GeneTree(treeString);
+        tree->treeParams = *(this->params);
+        push_back(tree);
+    }
 }
 
 PhyloSuperTreeUnlinked::~PhyloSuperTreeUnlinked() {
@@ -127,7 +142,7 @@ void PhyloSuperTreeUnlinked::buildMRPMatrix() {
     }
 
     mrpAln = new Alignment(seqNames, sequences, params->sequence_type);
-    mrpAln->printPhylip(cout);
+    // mrpAln->printPhylip(cout);
 }
 
 void PhyloSuperTreeUnlinked::doMRP() {
@@ -171,9 +186,57 @@ void PhyloSuperTreeUnlinked::doSCM() {
         sourcesTree.push_back(tree->getTreeString());
     }
     getAllSeqNames();
-    StrictConsensusMerge scm(sourcesTree, seqNameToIndex);
-    scm.run();
-}
 
-void PhyloSuperTreeUnlinked::printSCMTree() {
+    StrictConsensusMerge scm(sourcesTree, seqNameToIndex);
+    GeneTree *scmTree = scm.getSCMTree();
+    scmTree->reInitializeTree();
+
+    string treeFile(this->params->out_prefix);
+    scmTree->printResultTree(treeFile + ".scm", false);
+    scmTree->drawTree(cout, 0);
+
+    if (params->mrp_type == MRPType::MRP_NONE) {
+        delete scmTree;
+        return;
+    }
+
+    vector<GeneNode*> polytomies;
+    scmTree->getPolytomies(polytomies);
+    for (auto polytomy: polytomies) {
+        map<string, string> relabel;
+        map<string, GeneNode*> delabel;
+        int label = 0;
+        scmTree->getRelabelMap(relabel, delabel, label, polytomy);
+
+        Params params = *(this->params);
+        PhyloSuperTreeUnlinked *newTree = new PhyloSuperTreeUnlinked(params, sourcesTree);
+        for (int i = 0; i < newTree->size(); ++i) {
+            GeneTree* tree = (GeneTree*)(*newTree)[i];
+            tree->relabelAndCollapse(relabel);
+
+            if (tree->leafNum < 4){
+                iter_swap(newTree->begin() + i, newTree->end() - 1);
+                delete newTree->back();
+                newTree->pop_back();
+                --i;
+            }
+        }
+        
+        if (!newTree->empty()) {
+            newTree->doMRP();
+            GeneTree *mrpTree = newTree->mrpTree;
+            mrpTree->delabelTree(delabel);
+            mrpTree->root = NULL;
+            assert(polytomy->degree() == 0);
+            delete polytomy;
+        }
+        
+        delete newTree;
+    }
+
+    scmTree->reInitializeTree();
+    scmTree->printResultTree(treeFile + ".supertree", false);
+    scmTree->drawTree(cout, 0);
+
+    delete scmTree;
 }
