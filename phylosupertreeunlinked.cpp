@@ -214,7 +214,7 @@ void PhyloSuperTreeUnlinked::doSCM() {
             GeneTree* tree = (GeneTree*)(*newTree)[i];
             tree->relabelAndCollapse(relabel);
 
-            if (tree->leafNum < 4){
+            if (tree->leafNum < 4 || tree->branchNum <= tree->leafNum) {
                 iter_swap(newTree->begin() + i, newTree->end() - 1);
                 delete newTree->back();
                 newTree->pop_back();
