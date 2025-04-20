@@ -1968,7 +1968,6 @@ void doSCM(PhyloSuperTreeUnlinked *stree) {
 	double startRealTime = getRealTime();
 
 	stree->doSCM();
-	stree->printSCMTree();
 
 	cout << "\nTotal CPU time for SCM: "
 			<< convert_time(getCPUTime() - startCPUTime) << " seconds." << endl;
