@@ -2748,7 +2748,7 @@ string computeConsensusTreeNoFileIO(StringIntMap& input_trees, IntVector & weigh
     ostringstream ostr;
     string tree_str;
 //    mytree.printTree(ostr, WT_BR_CLADE); // for testing by testCompConsensus
-	mytree.printTree(ostr, WT_TAXON_ID | WT_SORT_TAXA);
+	mytree.printTree(ostr, (params->mrp_type != MRPType::MRP_NONE ? 0 : WT_TAXON_ID) | WT_SORT_TAXA);
 	tree_str = ostr.str();
 	return tree_str;
 }

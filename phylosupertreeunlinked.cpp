@@ -13,10 +13,10 @@ PhyloSuperTreeUnlinked::PhyloSuperTreeUnlinked(Params &params): PhyloSuperTree(p
         conAln->checkGappySeq();
     }
 
-    if (params.gene_trees_file) {
-        // Print gene trees here because we need bifurcating trees
-        printGeneTrees();
-    }
+    // if (params.gene_trees_file) {
+    //     // Print gene trees here because we need bifurcating trees
+    //     printGeneTrees();
+    // }
 }
 
 PhyloSuperTreeUnlinked::PhyloSuperTreeUnlinked(Params &params, const StrVector &sourceTrees): PhyloSuperTree() {
@@ -152,14 +152,30 @@ void PhyloSuperTreeUnlinked::doMRP() {
     runOptimizeAndReconstruction(mrpTree->treeParams, mrpTree);
     // TODO: get best tree or greedy consensus tree or random tree
     switch (params->mrp_type) {
-        case MRPType::MRP_GREEDY:
+        case MRPType::MRP_GREEDY: {
+            StrVector bestTrees = mrpTree->candidateTrees.getHighestScoringTrees(params->popSize);
+            StringIntMap treels;
+            
+            for (int i = 0; i < bestTrees.size(); ++i) {
+                treels[bestTrees[i]] = i;
+            }
+            
+            IntVector weight(treels.size(), 1);
+
+            string greedyTree = computeConsensusTreeNoFileIO(treels, weight, params->tree_max_count, 
+                params->split_threshold, params->split_weight_threshold, params);
+
+            mrpTree->readTreeString(greedyTree);
             break;
-        case MRPType::MRP_RANDOM:
+        }
+        case MRPType::MRP_RANDOM: {
+            mrpTree->readTreeString(mrpTree->candidateTrees.getRandCandTree());
             break;
-        case MRPType::MRP_BEST:
+        }
+        case MRPType::MRP_BEST: {
+            // Do nothing
             break;
-        default:
-            break;
+        }
     }
 }
 
@@ -205,7 +221,7 @@ void PhyloSuperTreeUnlinked::doSCM() {
     for (auto polytomy: polytomies) {
         map<string, string> relabel;
         map<string, GeneNode*> delabel;
-        int label = 0;
+        int label = -1;
         scmTree->getRelabelMap(relabel, delabel, label, polytomy);
 
         Params params = *(this->params);

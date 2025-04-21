@@ -315,13 +315,13 @@ void GeneTree::getRelabelMap(map<string, string> &relabel, map<string, GeneNode*
     node->parent = parent;
 
     if (node->isLeaf()) {
-        relabel[node->name] = to_string(label);
+        relabel[node->name] = "t" + to_string(label);
         assert(parent != NULL);
     }
 
     for (auto child: node->getChildren()) {
         if (parent == NULL) {
-            delabel[to_string(++label)] = child;
+            delabel["t" + to_string(++label)] = child;
         }
         getRelabelMap(relabel, delabel, label, child, node);
     }
