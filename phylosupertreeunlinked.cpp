@@ -180,19 +180,22 @@ void PhyloSuperTreeUnlinked::doMRP() {
 }
 
 void PhyloSuperTreeUnlinked::printResultWithMRPTree() {
-    assert(conAln);
     assert(mrpTree);
 
-    IQTree *tmpTree = new IQTree(conAln);
-    tmpTree->copyTree(mrpTree);
-
-    Params newParams = *(this->params);
-    tmpTree->setParams(newParams);
-
-    cout << "\nSCORE OF MRP TREE: " << tmpTree->computeParsimony() << endl;
-    tmpTree->printResultTree();
+    if (conAln) {
+        IQTree *tmpTree = new IQTree(conAln);
+        tmpTree->copyTree(mrpTree);
     
-    delete tmpTree;
+        Params newParams = *(this->params);
+        tmpTree->setParams(newParams);
+    
+        cout << "\nSCORE OF MRP TREE: " << tmpTree->computeParsimony() << endl;
+        
+        delete tmpTree;
+    }
+    string treeFile(this->params->out_prefix);
+    treeFile += ".treefile";
+    mrpTree->printResultTree(treeFile, false);
 }
 
 void PhyloSuperTreeUnlinked::doSCM() {
