@@ -33,6 +33,8 @@ public:
 
     void doSCM();
 
+    void printScoreWithConAln(GeneTree *tree, string treeType);
+
     Alignment *conAln = NULL;
 
     Alignment *mrpAln = NULL;

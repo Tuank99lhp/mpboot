@@ -182,20 +182,11 @@ void PhyloSuperTreeUnlinked::doMRP() {
 void PhyloSuperTreeUnlinked::printResultWithMRPTree() {
     assert(mrpTree);
 
-    if (conAln) {
-        IQTree *tmpTree = new IQTree(conAln);
-        tmpTree->copyTree(mrpTree);
-    
-        Params newParams = *(this->params);
-        tmpTree->setParams(newParams);
-    
-        cout << "\nSCORE OF MRP TREE: " << tmpTree->computeParsimony() << endl;
-        
-        delete tmpTree;
-    }
     string treeFile(this->params->out_prefix);
     treeFile += ".treefile";
     mrpTree->printResultTree(treeFile, false);
+
+    printScoreWithConAln(mrpTree, "MRP");
 }
 
 void PhyloSuperTreeUnlinked::doSCM() {
@@ -212,7 +203,17 @@ void PhyloSuperTreeUnlinked::doSCM() {
 
     string treeFile(this->params->out_prefix);
     scmTree->printResultTree(treeFile + ".scm", false);
-    scmTree->drawTree(cout, 0);
+
+    string drawFile(this->params->out_prefix);
+    drawFile += ".draw";
+
+    ofstream out;
+    out.exceptions(ios::failbit | ios::badbit);
+    out.open(drawFile.c_str());
+    out << "STRICT CONSENSUS MERGER TREE\n--------------------------------------------------------\n\n";
+    scmTree->drawTree(out);
+    out << "\n\n";
+    out.close();
 
     if (params->mrp_type == MRPType::MRP_NONE) {
         delete scmTree;
@@ -254,8 +255,31 @@ void PhyloSuperTreeUnlinked::doSCM() {
     }
 
     scmTree->reInitializeTree();
-    scmTree->printResultTree(treeFile + ".supertree", false);
-    scmTree->drawTree(cout, 0);
+    scmTree->printResultTree(treeFile + ".treefile", false);
+
+    out.open(drawFile.c_str(), ios::app);
+    out << "SCM + MRP TREE\n--------------------------------------------------------\n\n";
+    scmTree->drawTree(out);
+    out << "\n\n";
+    out.close();
+
+    printScoreWithConAln(scmTree, "SCM");
 
     delete scmTree;
+}
+
+void PhyloSuperTreeUnlinked::printScoreWithConAln(GeneTree *tree, string treeType) {
+    if (conAln == NULL) {
+        return;
+    }
+    
+    IQTree *tmpTree = new IQTree(conAln);
+    tmpTree->copyTree(tree);
+
+    Params newParams = *(this->params);
+    tmpTree->setParams(newParams);
+
+    cout << "\nSCORE OF " + treeType + " TREE: " << tmpTree->computeParsimony() << endl;
+    
+    delete tmpTree;
 }
