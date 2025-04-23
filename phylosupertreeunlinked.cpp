@@ -157,7 +157,7 @@ void PhyloSuperTreeUnlinked::buildMRPMatrix() {
     mrpAln = new Alignment(seqNames, sequences, params->sequence_type);
 
     cout << "\nMRP: MRP matrix built with " << mrpAln->getNSeq() << " sequences and " << mrpAln->getNSite() << " characters\n";
-    mrpAln->printPhylip(cout);
+    // mrpAln->printPhylip(cout);
 }
 
 void PhyloSuperTreeUnlinked::doMRP() {
@@ -206,15 +206,21 @@ void PhyloSuperTreeUnlinked::printResultWithMRPTree() {
 
 void PhyloSuperTreeUnlinked::doSCM() {
     StrVector sourcesTree;
+    int scaffoldDensity = 0;
     for (auto it = begin(); it != end(); it++) {
         GeneTree* tree = (GeneTree*)(*it);
+        scaffoldDensity = max(scaffoldDensity, tree->getNumTaxa());
         sourcesTree.push_back(tree->getTreeString());
     }
     getAllSeqNames();
 
+    cout << "SCM: Scaffold density " << 1.0 * scaffoldDensity / allSeqNames.size() << "\n";
+
     StrictConsensusMerge scm(sourcesTree, seqNameToIndex);
     GeneTree *scmTree = scm.getSCMTree();
     scmTree->reInitializeTree();
+
+    cout << "SCM: Resolution of SCM Tree: " << 1.0 * (scmTree->nodeNum - scmTree->leafNum) / (scmTree->leafNum - 2) << "\n"; 
 
     string treeFile(this->params->out_prefix);
     scmTree->printResultTree(treeFile + ".scm", false);
