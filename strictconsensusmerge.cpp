@@ -330,7 +330,7 @@ GeneTree *StrictConsensusMerge::getSCMTree() {
         sort(treePairsScore.back().begin(), treePairsScore.back().end());
     }
 
-    cout << "SCM: Merged SCM trees successfully" << endl;
+    cout << "SCM: Merging gene trees by SCM successfully" << endl;
     // for (int i = 0; i < trees.size() - 1; ++i) {
     //     assert(trees[i] == NULL);
     // }
