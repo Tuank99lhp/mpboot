@@ -9,8 +9,14 @@ PhyloSuperTreeUnlinked::PhyloSuperTreeUnlinked(Params &params): PhyloSuperTree(p
     }
 
     if (params.aln_file) {
+        VerboseMode saved_mode;
+        saved_mode = verbose_mode;
+        verbose_mode = VB_QUIET;
+
         conAln = new Alignment(params.aln_file, params.sequence_type, params.intype);
         conAln->checkGappySeq();
+
+        verbose_mode = saved_mode;
     }
 
     // if (params.gene_trees_file) {
@@ -75,15 +81,22 @@ StrVector PhyloSuperTreeUnlinked::getAllSeqNames() {
 
 void PhyloSuperTreeUnlinked::runGeneTreesReconstruction() {
     for (auto it = begin(); it != end(); it++) {
+        cout << "----------     Reconstructing gene tree " << (it - begin()) << "     ----------\n";
+        VerboseMode saved_mode;
+        saved_mode = verbose_mode;
+        verbose_mode = VB_QUIET;
+
         GeneTree* tree = (GeneTree*)(*it);
         runOptimizeAndReconstruction(tree->treeParams, tree);
-        // TODO: get best tree or greedy consensus tree or random tree
+        
+        verbose_mode = saved_mode;
+        cout << "\n---------- Reconstruction of gene tree " << (it - begin()) << " done ----------\n\n";
     }
 }
 
 void PhyloSuperTreeUnlinked::printGeneTrees() {
     string treeFile(this->params->out_prefix);
-    treeFile += ".genetreesfile";
+    treeFile += ".gene_trees";
     // open treeFile and remove all
     ofstream outFile(treeFile.c_str());
     outFile.close();
@@ -142,7 +155,9 @@ void PhyloSuperTreeUnlinked::buildMRPMatrix() {
     }
 
     mrpAln = new Alignment(seqNames, sequences, params->sequence_type);
-    // mrpAln->printPhylip(cout);
+
+    cout << "\nMRP: MRP matrix built with " << mrpAln->getNSeq() << " sequences and " << mrpAln->getNSite() << " characters\n";
+    mrpAln->printPhylip(cout);
 }
 
 void PhyloSuperTreeUnlinked::doMRP() {
@@ -222,7 +237,18 @@ void PhyloSuperTreeUnlinked::doSCM() {
 
     vector<GeneNode*> polytomies;
     scmTree->getPolytomies(polytomies);
+
+    cout << "SCM: Refining SCM Tree\n";
+    
+    VerboseMode saved_mode;
+    saved_mode = verbose_mode;
+    verbose_mode = VB_QUIET;
+
+    int maxDegree = 0;
+
     for (auto polytomy: polytomies) {
+        maxDegree = max(maxDegree, polytomy->degree());
+
         map<string, string> relabel;
         map<string, GeneNode*> delabel;
         int label = -1;
@@ -254,6 +280,12 @@ void PhyloSuperTreeUnlinked::doSCM() {
         delete newTree;
     }
 
+    verbose_mode = saved_mode;
+
+    cout << "SCM: Refining SCM Tree successfully with " 
+    + to_string(polytomies.size()) + " polytomies"
+    + " and max degree " + to_string(maxDegree) << "\n";
+
     scmTree->reInitializeTree();
     scmTree->printResultTree(treeFile + ".treefile", false);
 
@@ -279,7 +311,7 @@ void PhyloSuperTreeUnlinked::printScoreWithConAln(GeneTree *tree, string treeTyp
     Params newParams = *(this->params);
     tmpTree->setParams(newParams);
 
-    cout << "\nSCORE OF " + treeType + " TREE: " << tmpTree->computeParsimony() << endl;
+    cout << "\nSCORE OF " + treeType + " TREE: " << tmpTree->computeParsimony() << "\n";
     
     delete tmpTree;
 }

@@ -1957,7 +1957,7 @@ void runGeneTreesReconstruction(PhyloSuperTreeUnlinked *stree) {
 	stree->runGeneTreesReconstruction();
 	stree->printGeneTrees();
 
-	cout << "\nTotal CPU time for gene trees reconstruction: "
+	cout << "Total CPU time for gene trees reconstruction: "
 			<< convert_time(getCPUTime() - startCPUTime) << " seconds." << endl;
 	cout << "Total wall-clock time for gene trees reconstruction: "
 			<< convert_time(getRealTime() - startRealTime) << " seconds.\n" << endl;
@@ -2278,15 +2278,29 @@ void runPhyloAnalysis(Params &params) {
 	if (params.partition_type == 'u') {
 		PhyloSuperTreeUnlinked *stree = (PhyloSuperTreeUnlinked*) tree;
 
+		string resultAnalysisFile = "Analysis results written to: \n";
+		string outPrefix(params.out_prefix);
+
+		resultAnalysisFile += "  Log file:				     " + outPrefix + ".log\n";
+
 		if (!params.gene_trees_file) {
 			runGeneTreesReconstruction(stree);
+			resultAnalysisFile += "  Gene trees:                                " + outPrefix + ".gene_trees\n";
 		}
 
 		if (params.strict_consensus_merger) {
 			doSCM(stree);
+			resultAnalysisFile += "  Strict consensus merger tree:              " + outPrefix + ".scm\n";
+			if (params.mrp_type != MRP_NONE) {
+				resultAnalysisFile += "  Refined strict consensus merger tree:      " + outPrefix + ".treefile\n";
+			}
+			resultAnalysisFile += "  Draw SCM tree:                             " + outPrefix + ".draw\n";
 		} else if (params.mrp_type != MRP_NONE) {
 			doMRP(stree);
+			resultAnalysisFile += "  MRP tree:                                  " + outPrefix + ".treefile\n";
 		}
+
+		cout << resultAnalysisFile << "\n";
 
 	} else if (params.aln_output) {
 		/************ convert alignment to other format and write to output file *************/
