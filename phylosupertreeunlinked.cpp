@@ -301,6 +301,8 @@ void PhyloSuperTreeUnlinked::doSCM() {
 
     scmTree->reInitializeTree();
     scmTree->printResultTree(treeFile + ".treefile", false);
+    
+    cout << "SCM: Resolution of refined SCM Tree: " << 1.0 * (scmTree->nodeNum - scmTree->leafNum) / (scmTree->leafNum - 2) << "\n";
 
     out.open(drawFile.c_str(), ios::app);
     out << "SCM + MRP TREE\n--------------------------------------------------------\n\n";
