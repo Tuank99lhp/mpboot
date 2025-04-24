@@ -112,16 +112,6 @@ void MTreeSet::init(StringIntMap &treels, bool &is_rooted, IntVector &weights) {
 //		if(!mulhits_check){
 			// Minh's code
 			for (NodeVector::iterator taxit = taxa.begin(); taxit != taxa.end(); taxit++){
-				bool is_number = true;
-				for (char ch: (*taxit)->name) {
-					if (ch < '0' || ch > '9') {
-						is_number = false;
-						break;
-					}
-				}
-				if (is_number == false) {
-					break;
-				}
 				(*taxit)->id = atoi((*taxit)->name.c_str());
 			}
 //		}else{

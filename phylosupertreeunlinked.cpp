@@ -262,6 +262,13 @@ void PhyloSuperTreeUnlinked::doSCM() {
 
         Params params = *(this->params);
         PhyloSuperTreeUnlinked *newTree = new PhyloSuperTreeUnlinked(params, sourcesTree);
+            
+        for (int i = 0; i <= label; ++i) {
+            string name = to_string(i);
+            newTree->allSeqNames.push_back(name);
+            newTree->seqNameToIndex[name] = i;
+        }
+
         for (int i = 0; i < newTree->size(); ++i) {
             GeneTree* tree = (GeneTree*)(*newTree)[i];
             tree->relabelAndCollapse(relabel);
