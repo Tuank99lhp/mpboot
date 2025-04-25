@@ -154,6 +154,11 @@ void PhyloSuperTreeUnlinked::buildMRPMatrix() {
         }
     }
 
+    for (int i = 0; i < seqNames.size(); ++i) {
+        assert(seqNameToIndex[seqNames[i]] == i);
+        seqNames[i] = to_string(i);
+    }
+
     mrpAln = new Alignment(seqNames, sequences, params->sequence_type);
 
     cout << "\nMRP: MRP matrix built with " << mrpAln->getNSeq() << " sequences and " << mrpAln->getNSite() << " characters\n";
@@ -191,6 +196,11 @@ void PhyloSuperTreeUnlinked::doMRP() {
             // Do nothing
             break;
         }
+    }
+    NodeVector taxa;
+    mrpTree->getTaxa(taxa);
+    for (auto taxon: taxa) {
+        taxon->name = allSeqNames[stoi(taxon->name)];
     }
 }
 
