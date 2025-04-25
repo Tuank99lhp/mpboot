@@ -230,7 +230,7 @@ void PhyloSuperTreeUnlinked::doSCM() {
     GeneTree *scmTree = scm.getSCMTree();
     scmTree->reInitializeTree();
 
-    cout << "SCM: Resolution of SCM Tree: " << 1.0 * (scmTree->nodeNum - scmTree->leafNum) / (scmTree->leafNum - 2) << "\n"; 
+    cout << fixed << setprecision(2) << "SCM: Resolution of SCM Tree: " << 1.0 * (scmTree->nodeNum - scmTree->leafNum) / (scmTree->leafNum - 2) << "\n"; 
 
     string treeFile(this->params->out_prefix);
     scmTree->printResultTree(treeFile + ".scm", false);
@@ -272,12 +272,6 @@ void PhyloSuperTreeUnlinked::doSCM() {
 
         Params params = *(this->params);
         PhyloSuperTreeUnlinked *newTree = new PhyloSuperTreeUnlinked(params, sourcesTree);
-            
-        for (int i = 0; i <= label; ++i) {
-            string name = to_string(i);
-            newTree->allSeqNames.push_back(name);
-            newTree->seqNameToIndex[name] = i;
-        }
 
         for (int i = 0; i < newTree->size(); ++i) {
             GeneTree* tree = (GeneTree*)(*newTree)[i];
