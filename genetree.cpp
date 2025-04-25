@@ -249,6 +249,9 @@ void GeneTree::reInitializeTree(GeneNode *node, GeneNode* parent) {
     }
 
     node->id = (node->isLeaf() ? leafNum++ : nodeNum++);
+    if (node->isLeaf() == false) {
+        node->name = "";
+    }
 
     FOR_NEIGHBOR_IT(node, parent, it) {
         (*it)->id = branchNum;
@@ -457,4 +460,43 @@ void GeneTree::deleteDuplicateNode(GeneNode *node, GeneNode *parent) {
         }
         delete node;
     }
+}
+
+void GeneTree::setNodeIdByMapName(const map<string, int> &seqNameToIndex) {
+    NodeVector taxa;
+    getTaxa(taxa);
+    
+    assert(taxa.size() == seqNameToIndex.size());
+
+    for (auto taxon: taxa) {
+        string seqName = taxon->name;
+        assert(seqNameToIndex.find(seqName) != seqNameToIndex.end());
+        taxon->id = seqNameToIndex.at(seqName);
+    }
+}
+
+string GeneTree::getBootstrapTree(int index) {
+    if (bootstrapTrees.empty()) {
+        for (const auto &[tree, id]: treels) {
+            assert(aln);
+            
+            GeneTree *tmpTree = new GeneTree(tree);
+            
+            NodeVector taxa;
+            tmpTree->getTaxa(taxa);
+            
+            for (auto taxon: taxa) {
+                taxon->name = aln->getSeqName(stoi(taxon->name));
+            }
+
+            bootstrapTrees[id] = tmpTree->getTreeString();
+            
+            delete tmpTree;
+        }
+    }
+
+    assert(index >= 0 && index < boot_trees.size());
+    assert(bootstrapTrees.find(boot_trees[index]) != bootstrapTrees.end());
+
+    return bootstrapTrees[boot_trees[index]];
 }

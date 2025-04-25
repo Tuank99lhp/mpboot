@@ -33,7 +33,11 @@ public:
 
     void doSCM();
 
+    void printResultWithSCMTree();
+
     void printScoreWithConAln(GeneTree *tree, string treeType);
+
+    StrVector createBootstrapGeneTrees();
 
     Alignment *conAln = NULL;
 
@@ -42,6 +46,8 @@ public:
     GeneTree *mrpTree = NULL;
 
     GeneTree *scmTree = NULL;
+
+    string firstSCMTree;
 
     StrVector allSeqNames;
 

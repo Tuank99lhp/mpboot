@@ -1963,11 +1963,81 @@ void runGeneTreesReconstruction(PhyloSuperTreeUnlinked *stree) {
 			<< convert_time(getRealTime() - startRealTime) << " seconds.\n" << endl;
 }
 
-void doSCM(PhyloSuperTreeUnlinked *stree) {
+void doSCM(Params &params, PhyloSuperTreeUnlinked *stree) {
 	double startCPUTime = getCPUTime();
 	double startRealTime = getRealTime();
 
 	stree->doSCM();
+
+	if (params.aln_file && params.partition_file && params.gbo_replicates > 0) {
+		cout << "\nCreating bootstrap support values...\n";
+		stree->getAllSeqNames();
+		
+		GeneTree *scmTree = stree->scmTree;
+		scmTree->setNodeIdByMapName(stree->seqNameToIndex);
+		assert(scmTree->root->isLeaf());
+
+		StringIntMap treels;
+		MTreeSet trees;
+		IntVector tree_weights(params.gbo_replicates, 0);
+		
+        VerboseMode saved_mode;
+        saved_mode = verbose_mode;
+        verbose_mode = VB_QUIET;
+
+		for (int i = 0; i < params.gbo_replicates; ++i) {
+			Params bootstrapParams = params;
+			bootstrapParams.gbo_replicates = 0;
+
+			StrVector bootstrapGeneTrees = stree->createBootstrapGeneTrees();
+			PhyloSuperTreeUnlinked *bootstrapTree = new PhyloSuperTreeUnlinked(bootstrapParams, bootstrapGeneTrees);
+			
+			bootstrapTree->doSCM();
+
+			bootstrapTree->scmTree->setNodeIdByMapName(stree->seqNameToIndex);
+			assert(bootstrapTree->scmTree->root->isLeaf());
+
+			ostringstream ostr;
+			bootstrapTree->scmTree->printTree(ostr, WT_TAXON_ID | WT_SORT_TAXA);
+
+			string tree_str = ostr.str();
+			if (treels.find(tree_str) == treels.end()) {
+				treels[tree_str] = i;
+			}
+			tree_weights[treels[tree_str]]++;
+
+			delete bootstrapTree;
+
+			verbose_mode = saved_mode;
+
+			if ((i + 1) % 100 == 0) {
+				cout << i + 1 << " replicates done." << endl;
+			}
+			
+			verbose_mode = VB_QUIET;
+		}
+
+		verbose_mode = saved_mode;
+
+		IQTree *tmpTree = new IQTree(stree->conAln);
+		tmpTree->copyTree(scmTree);
+		assert(tmpTree->rooted == false);
+
+		trees.init(treels, tmpTree->rooted, tree_weights);
+
+		Params tmpParams = params;
+		tmpParams.gbo_replicates = 0;
+		tmpTree->summarizeBootstrap(tmpParams, trees);
+
+		ostringstream ostr;
+		tmpTree->printTree(ostr, WT_BR_SCALE);
+		
+		scmTree->readTreeString(ostr.str());
+
+		delete tmpTree;
+	}
+
+	stree->printResultWithSCMTree();
 
 	cout << "\nTotal CPU time for SCM: "
 			<< convert_time(getCPUTime() - startCPUTime) << " seconds." << endl;
@@ -2289,7 +2359,7 @@ void runPhyloAnalysis(Params &params) {
 		}
 
 		if (params.strict_consensus_merger) {
-			doSCM(stree);
+			doSCM(params, stree);
 			resultAnalysisFile += "  Strict consensus merger tree:              " + outPrefix + ".scm\n";
 			if (params.mrp_type != MRP_NONE) {
 				resultAnalysisFile += "  Refined strict consensus merger tree:      " + outPrefix + ".treefile\n";

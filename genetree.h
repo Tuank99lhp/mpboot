@@ -68,6 +68,12 @@ public:
 
     void doubleCheckUniqueName(map<string, int> &checkUniqueLabel, GeneNode *node = NULL, GeneNode *parent = NULL);
 
+    void setNodeIdByMapName(const map<string, int> &seqNameToIndex);
+
+    string getBootstrapTree(int index);
+
+    map<int, string> bootstrapTrees;
+
     Params treeParams;
 
     int totalLeafNum = 0;

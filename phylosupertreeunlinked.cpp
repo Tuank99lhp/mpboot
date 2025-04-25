@@ -169,8 +169,9 @@ void PhyloSuperTreeUnlinked::doMRP() {
     buildMRPMatrix();
     mrpTree = new GeneTree(mrpAln);
     mrpTree->treeParams = *(this->params);
+    mrpTree->treeParams.gbo_replicates = 0;
     runOptimizeAndReconstruction(mrpTree->treeParams, mrpTree);
-    // TODO: get best tree or greedy consensus tree or random tree
+    
     switch (params->mrp_type) {
         case MRPType::MRP_GREEDY: {
             StrVector bestTrees = mrpTree->candidateTrees.getHighestScoringTrees(params->popSize);
@@ -224,27 +225,15 @@ void PhyloSuperTreeUnlinked::doSCM() {
     }
     getAllSeqNames();
 
-    cout << "SCM: Scaffold density " << 1.0 * scaffoldDensity / allSeqNames.size() << "\n";
+    cout << fixed << setprecision(2) << "SCM: Scaffold density: " << 1.0 * scaffoldDensity / allSeqNames.size() << "\n";
 
     StrictConsensusMerge scm(sourcesTree, seqNameToIndex);
-    GeneTree *scmTree = scm.getSCMTree();
+    scmTree = scm.getSCMTree();
     scmTree->reInitializeTree();
 
-    cout << fixed << setprecision(2) << "SCM: Resolution of SCM Tree: " << 1.0 * (scmTree->nodeNum - scmTree->leafNum) / (scmTree->leafNum - 2) << "\n"; 
+    cout << fixed << setprecision(2) << "SCM: Resolution of SCM Tree: " << 1.0 * (scmTree->nodeNum - scmTree->leafNum - 1) / (scmTree->leafNum - 3) << "\n"; 
 
-    string treeFile(this->params->out_prefix);
-    scmTree->printResultTree(treeFile + ".scm", false);
-
-    string drawFile(this->params->out_prefix);
-    drawFile += ".draw";
-
-    ofstream out;
-    out.exceptions(ios::failbit | ios::badbit);
-    out.open(drawFile.c_str());
-    out << "STRICT CONSENSUS MERGER TREE\n--------------------------------------------------------\n\n";
-    scmTree->drawTree(out);
-    out << "\n\n";
-    out.close();
+    firstSCMTree = scmTree->getTreeString();
 
     if (params->mrp_type == MRPType::MRP_NONE) {
         delete scmTree;
@@ -299,24 +288,45 @@ void PhyloSuperTreeUnlinked::doSCM() {
 
     verbose_mode = saved_mode;
 
+    scmTree->reInitializeTree();
+
     cout << "SCM: Refining SCM Tree successfully with " 
     + to_string(polytomies.size()) + " polytomies"
     + " and max degree " + to_string(maxDegree) << "\n";
 
-    scmTree->reInitializeTree();
-    scmTree->printResultTree(treeFile + ".treefile", false);
+    cout << fixed << setprecision(2) << "SCM: Resolution of refined SCM Tree: " << 1.0 * (scmTree->nodeNum - scmTree->leafNum - 1) / (scmTree->leafNum - 3) << "\n";
+}
+
+void PhyloSuperTreeUnlinked::printResultWithSCMTree() {
+    GeneTree *tmpTree = new GeneTree(firstSCMTree);
+
+    string treeFile(this->params->out_prefix);
+
+    tmpTree->printResultTree(treeFile + ".scm", false);
+
+    string drawFile(this->params->out_prefix);
+    drawFile += ".draw";
+
+    ofstream out;
+    out.exceptions(ios::failbit | ios::badbit);
+    out.open(drawFile.c_str());
     
-    cout << "SCM: Resolution of refined SCM Tree: " << 1.0 * (scmTree->nodeNum - scmTree->leafNum) / (scmTree->leafNum - 2) << "\n";
-
-    out.open(drawFile.c_str(), ios::app);
-    out << "SCM + MRP TREE\n--------------------------------------------------------\n\n";
-    scmTree->drawTree(out);
+    out << "STRICT CONSENSUS MERGER TREE\n--------------------------------------------------------\n\n";
+    tmpTree->drawTree(out, WT_SORT_TAXA);
     out << "\n\n";
+    
+    if (params->mrp_type != MRPType::MRP_NONE) {
+        scmTree->printResultTree(treeFile + ".treefile", false);
+
+        out << "SCM + MRP TREE\n--------------------------------------------------------\n\n";
+        scmTree->drawTree(out, WT_BR_SCALE | WT_SORT_TAXA);
+        out << "\n\n";
+    
+        printScoreWithConAln(scmTree, "SCM");
+    }
+    
     out.close();
-
-    printScoreWithConAln(scmTree, "SCM");
-
-    delete scmTree;
+    delete tmpTree;
 }
 
 void PhyloSuperTreeUnlinked::printScoreWithConAln(GeneTree *tree, string treeType) {
@@ -328,9 +338,20 @@ void PhyloSuperTreeUnlinked::printScoreWithConAln(GeneTree *tree, string treeTyp
     tmpTree->copyTree(tree);
 
     Params newParams = *(this->params);
+    newParams.gbo_replicates = 0;
     tmpTree->setParams(newParams);
 
     cout << "\nSCORE OF " + treeType + " TREE: " << tmpTree->computeParsimony() << "\n";
     
     delete tmpTree;
+}
+
+StrVector PhyloSuperTreeUnlinked::createBootstrapGeneTrees() {
+    StrVector bootstrapGeneTrees;
+    for (auto it = begin(); it != end(); it++) {
+        GeneTree* tree = (GeneTree*)(*it);
+        int randIdx = random_int(tree->boot_trees.size());
+        bootstrapGeneTrees.push_back(tree->getBootstrapTree(randIdx));
+    }
+    return bootstrapGeneTrees;
 }
