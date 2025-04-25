@@ -212,6 +212,19 @@ void PhyloSuperTreeUnlinked::printResultWithMRPTree() {
     treeFile += ".treefile";
     mrpTree->printResultTree(treeFile, false);
 
+    string drawFile(this->params->out_prefix);
+    drawFile += ".draw";
+
+    ofstream out;
+    out.exceptions(ios::failbit | ios::badbit);
+    out.open(drawFile.c_str());
+    
+    out << "MRP TREE\n--------------------------------------------------------\n\n";
+    mrpTree->drawTree(out, WT_BR_SCALE | WT_SORT_TAXA);
+    out << "\n\n";
+    
+    out.close();
+
     printScoreWithConAln(mrpTree, "MRP");
 }
 

@@ -3942,7 +3942,7 @@ void IQTree::summarizeBootstrap(Params &params, MTreeSet &trees) {
     assignLeafNames();
     if (isSuperTree()) {
         ((PhyloSuperTree*) this)->mapTrees();
-    } else {
+    } else if (params.gbo_replicates > 0) {
 		initializeAllPartialLh();
 		clearAllPartialLH();
     }

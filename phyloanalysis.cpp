@@ -1970,7 +1970,7 @@ void doSCM(Params &params, PhyloSuperTreeUnlinked *stree) {
 	stree->doSCM();
 
 	if (params.aln_file && params.partition_file && params.gbo_replicates > 0) {
-		cout << "\nCreating bootstrap support values...\n";
+		cout << "\nCreating bootstrap support for SCM Tree...\n";
 		stree->getAllSeqNames();
 		
 		GeneTree *scmTree = stree->scmTree;
@@ -2045,11 +2045,80 @@ void doSCM(Params &params, PhyloSuperTreeUnlinked *stree) {
 			<< convert_time(getRealTime() - startRealTime) << " seconds.\n" << endl;
 }
 
-void doMRP(PhyloSuperTreeUnlinked *stree) {
+void doMRP(Params &params, PhyloSuperTreeUnlinked *stree) {
 	double startCPUTime = getCPUTime();
 	double startRealTime = getRealTime();
 
 	stree->doMRP();
+
+	if (params.aln_file && params.partition_file && params.gbo_replicates > 0) {
+		cout << "\nCreating bootstrap support for MRP Tree...\n";
+		stree->getAllSeqNames();
+		
+		GeneTree *mrpTree = stree->mrpTree;
+		mrpTree->setNodeIdByMapName(stree->seqNameToIndex);
+		assert(mrpTree->root->isLeaf());
+
+		StringIntMap treels;
+		MTreeSet trees;
+		IntVector tree_weights(params.gbo_replicates, 0);
+		
+        VerboseMode saved_mode;
+        saved_mode = verbose_mode;
+        verbose_mode = VB_QUIET;
+
+		for (int i = 0; i < params.gbo_replicates; ++i) {
+			Params bootstrapParams = params;
+			bootstrapParams.gbo_replicates = 0;
+
+			StrVector bootstrapGeneTrees = stree->createBootstrapGeneTrees();
+			PhyloSuperTreeUnlinked *bootstrapTree = new PhyloSuperTreeUnlinked(bootstrapParams, bootstrapGeneTrees);
+			
+			bootstrapTree->doMRP();
+
+			bootstrapTree->mrpTree->setNodeIdByMapName(stree->seqNameToIndex);
+			assert(bootstrapTree->mrpTree->root->isLeaf());
+
+			ostringstream ostr;
+			bootstrapTree->mrpTree->printTree(ostr, WT_TAXON_ID | WT_SORT_TAXA);
+
+			string tree_str = ostr.str();
+			if (treels.find(tree_str) == treels.end()) {
+				treels[tree_str] = i;
+			}
+			tree_weights[treels[tree_str]]++;
+
+			delete bootstrapTree;
+
+			verbose_mode = saved_mode;
+
+			if ((i + 1) % 100 == 0) {
+				cout << i + 1 << " replicates done." << endl;
+			}
+			
+			verbose_mode = VB_QUIET;
+		}
+
+		verbose_mode = saved_mode;
+
+		IQTree *tmpTree = new IQTree(stree->conAln);
+		tmpTree->copyTree(mrpTree);
+		assert(tmpTree->rooted == false);
+
+		trees.init(treels, tmpTree->rooted, tree_weights);
+
+		Params tmpParams = params;
+		tmpParams.gbo_replicates = 0;
+		tmpTree->summarizeBootstrap(tmpParams, trees);
+
+		ostringstream ostr;
+		tmpTree->printTree(ostr, WT_BR_SCALE);
+		
+		mrpTree->readTreeString(ostr.str());
+
+		delete tmpTree;
+	}
+
 	stree->printResultWithMRPTree();
 
 	cout << "\nTotal CPU time for MRP: "
@@ -2366,8 +2435,13 @@ void runPhyloAnalysis(Params &params) {
 			}
 			resultAnalysisFile += "  Draw SCM tree:                             " + outPrefix + ".draw\n";
 		} else if (params.mrp_type != MRP_NONE) {
-			doMRP(stree);
+			doMRP(params, stree);
 			resultAnalysisFile += "  MRP tree:                                  " + outPrefix + ".treefile\n";
+			resultAnalysisFile += "  Draw MRP tree:                             " + outPrefix + ".draw\n";
+		}
+
+		if (params.aln_file && params.partition_file && params.gbo_replicates > 0) {
+			resultAnalysisFile += "  Split support values:                      " + outPrefix + ".splits.nex\n";
 		}
 
 		cout << resultAnalysisFile << "\n";
