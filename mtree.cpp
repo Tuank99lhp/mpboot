@@ -818,6 +818,25 @@ void MTree::getInternalBranches(NodeVector &nodes, NodeVector &nodes2, Node *nod
     }
 }
 
+void MTree::getInnerBranches(BranchVector& branches, Node *node, Node *dad, bool post_traversal) {
+    if (!node) node = root;
+    FOR_NEIGHBOR_IT(node, dad, it) {
+        if (!node->isLeaf() && !(*it)->node->isLeaf() && !post_traversal) {
+            pairNode branch;
+            branch.first = node;
+            branch.second = (*it)->node;
+            branches.push_back(branch);
+        }
+        getInnerBranches(branches, (*it)->node, node, post_traversal);
+        if (!node->isLeaf() && !(*it)->node->isLeaf() && post_traversal) {
+            pairNode branch;
+            branch.first = node;
+            branch.second = (*it)->node;
+            branches.push_back(branch);
+        }
+    }
+}
+
 void MTree::getInBranches(map<string, Branch> &brans, int depth, Node *node, Node *dad) {
     if (depth == 0)
       return;

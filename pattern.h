@@ -51,6 +51,12 @@ public:
 	*/
     virtual ~Pattern();
 
+	inline bool isInformative() const {
+        return is_informative;
+    }
+
+	bool is_informative;
+
 	/**
 		frequency appearance of the pattern
 	*/

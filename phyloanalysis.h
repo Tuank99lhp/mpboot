@@ -58,6 +58,8 @@ void assignBootstrapSupport(const char *input_trees, int burnin, int max_count, 
  */
 void assignBranchSupportNew(Params &params);
 
+void assignConcordanceFactors(Params &params);
+
 /**
 	Compute the consensus tree from the collection of trees from input_trees
 	and print resulting tree to output_tree. 

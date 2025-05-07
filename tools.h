@@ -645,6 +645,21 @@ struct Params {
      */
     char *gene_trees_file;
 
+    /**
+     *      TRUE to compute gene concordance factor
+     */
+    bool gene_concordance;
+
+    /**
+        number of quartets for site concordance factor
+     */
+    int site_concordance;
+
+    /**
+     tree in extended newick format with node label like [&label=""]
+     */
+    bool newick_extended_format;
+
     /** remove all-gap sequences in partition model to account for terrace default: TRUE */
     bool remove_empty_seq;
 

@@ -2594,6 +2594,101 @@ void assignBranchSupportNew(Params &params) {
 		tree.drawTree(cout);
 }
 
+void assignConcordanceFactors(Params &params) {
+	if (!params.user_file) {
+        outError("No target tree file provided");
+	}
+
+	GeneTree *tree = new GeneTree();
+    Alignment *aln = NULL;
+
+	tree->params = &params;
+
+	cout << "Reading tree " << params.user_file << " ..." << endl;
+	bool rooted = params.is_rooted;
+    tree->readTree(params.user_file, rooted);
+    cout << ((tree->rooted) ? "rooted" : "un-rooted") << " tree with "
+        << tree->leafNum - tree->rooted << " taxa and " << tree->branchNum << " branches" << endl;
+
+	if (!tree->isBifurcating()) {
+		outError("ERROR: Input tree must be bifurcating");
+	}
+
+	if (params.site_concordance) {
+		if (!params.aln_file) {
+			outError("Please provide an alignment (-s)");
+		}
+		aln = new Alignment(params.aln_file, params.sequence_type, params.intype);
+		tree->setAlignment(aln);
+	}
+
+	BranchVector branches;
+    tree->getInnerBranches(branches);
+
+    for (BranchVector::iterator brit = branches.begin(); brit != branches.end(); brit++) {
+        Neighbor *branch = brit->second->findNeighbor(brit->first);
+        string label = brit->second->name;
+        if (!label.empty())
+            PUT_ATTR(branch, label);
+    }
+
+	map<string,string> meanings;
+    
+    if (params.gene_concordance) {
+		if (!params.gene_trees_file) {
+			outError("No gene trees file provided");
+		}
+
+		vector<GeneTree *> gene_trees;
+		ifstream in;
+		in.exceptions(ios::failbit | ios::badbit);
+		in.open(params.gene_trees_file);
+		in.exceptions(ios::badbit);
+
+		cout << "Reading gene trees file " << params.gene_trees_file << " ..." << endl;
+
+		string line;
+
+		for (; !in.eof();) {
+			getline(in, line);
+			if (line == "") continue;
+			GeneTree *gene_tree = new GeneTree(line);
+			gene_tree->params = &params;
+			gene_trees.push_back(gene_tree);
+		}
+
+		in.clear();
+		in.exceptions(ios::failbit | ios::badbit);
+		in.close();
+
+        double start_time = getRealTime();
+        cout << "Computing gene concordance factor..." << endl;
+
+        tree->computeGeneConcordance(gene_trees, meanings);
+		
+        cout << "Computing gene concordance factor time: " << getRealTime() - start_time << " sec" << endl;
+    }
+
+    if (params.site_concordance) {
+        double start_time = getRealTime();
+        cout << "Computing site concordance factor..." << endl;
+
+        tree->computeSiteConcordance(meanings);
+
+        cout << "Computing site concordance factor time:" << getRealTime() - start_time << " sec" << endl;
+        delete aln;
+    }
+
+	string prefix = (params.out_prefix) ? params.out_prefix : params.user_file;
+	string out_file = prefix + ".cf.tree";
+
+    tree->drawTree(cout, WT_BR_SCALE);
+	tree->printTree(out_file.c_str(), WT_BR_SCALE | WT_SORT_TAXA | WT_NEWLINE);
+
+	cout << "Log and draw tree written to " << prefix << ".log" << endl;
+	cout << "Tree newick with concordance factors written to " << prefix << ".cf.tree" << endl;
+}
+
 
 
 /**

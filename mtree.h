@@ -395,6 +395,13 @@ public:
     void getInBranches(map<string, Branch> &brans, int depth, Node *node, Node *dad);
 
     /**
+     get all inner branches below the node
+     @param branches the branches are stored here
+     @param post_traveral true for post-traversal, false for pre-traversal
+     */
+    void getInnerBranches(BranchVector& branches, Node *node = NULL, Node *dad = NULL, bool post_traversal = false);
+
+    /**
      * @brief: check if the branch is internal
      * @param[in] node1 one end of the branch
      * @param[in] node2 the other end of the branch

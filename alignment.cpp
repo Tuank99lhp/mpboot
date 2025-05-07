@@ -1696,6 +1696,29 @@ void Alignment::extractSites(Alignment *aln, IntVector &site_id) {
     //cout << __func__ << " " << num_states << endl;
 }
 
+void Alignment::computeQuartetSupports(IntVector &quartet, vector<int64_t> &support) {
+    // sanity check e.g. when having rooted tree
+    for (auto q = quartet.begin(); q != quartet.end(); q++)
+        assert(*q < getNSeq());
+        
+    for (auto pat = begin(); pat != end(); pat++) {
+        if (!pat->isInformative()) continue;
+        bool informative = true;
+        for (int j = 0; j < quartet.size(); j++)
+            if (pat->at(quartet[j]) >= num_states) {
+                informative = false;
+                break;
+            }
+        if (!informative) continue;
+        if (pat->at(quartet[0]) == pat->at(quartet[1]) && pat->at(quartet[2]) == pat->at(quartet[3]) && pat->at(quartet[0]) != pat->at(quartet[2]))
+            support[0] += pat->frequency;
+        if (pat->at(quartet[0]) == pat->at(quartet[2]) && pat->at(quartet[1]) == pat->at(quartet[3]) && pat->at(quartet[0]) != pat->at(quartet[1]))
+            support[1] += pat->frequency;
+        if (pat->at(quartet[0]) == pat->at(quartet[3]) && pat->at(quartet[1]) == pat->at(quartet[2]) && pat->at(quartet[0]) != pat->at(quartet[1]))
+            support[2] += pat->frequency;
+    }
+}
+
 void convert_range(const char *str, int &lower, int &upper, int &step_size, char* &endptr) throw (string) {
     //char *endptr;
     char *beginptr = (char*) str;

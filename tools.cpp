@@ -633,6 +633,9 @@ void parseArg(int argc, char *argv[], Params &params) {
 	params.strict_consensus_merger = false;
 	params.mrp_type = MRP_NONE;
 	params.gene_trees_file = NULL;
+	params.gene_concordance = false;
+	params.site_concordance = 0;
+    params.newick_extended_format = false;
     params.remove_empty_seq = true;
     params.terrace_aware = true;
     params.sequence_type = NULL;
@@ -1482,6 +1485,32 @@ void parseArg(int argc, char *argv[], Params &params) {
                 params.partition_type = 'u';
 				continue;
 			}
+			if (strcmp(argv[cnt], "-gcf") == 0) {
+				params.gene_concordance = true;
+				cnt++;
+				if (cnt >= argc)
+					throw "Use -gcf <gene_trees_file>";
+				params.gene_trees_file = argv[cnt];
+				continue;
+			}
+			if (strcmp(argv[cnt], "-scf") == 0) {
+				cnt++;
+				if (cnt >= argc)
+					throw "Use -scf NUM_QUARTETS";
+				params.site_concordance = convert_int(argv[cnt]);
+				continue;
+			}
+			if (strcmp(argv[cnt], "-user_file") == 0) {
+				cnt++;
+				if (cnt >= argc)
+					throw "Use -user_file <user_file>";
+				params.user_file = argv[cnt];
+				continue;
+			}
+			if (strcmp(argv[cnt], "--figtree") == 0) {
+                params.newick_extended_format = true;
+                continue;
+            }
 			if (strcmp(argv[cnt], "-keep_empty_seq") == 0) {
 				params.remove_empty_seq = false;
 				continue;

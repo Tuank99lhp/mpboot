@@ -101,6 +101,41 @@ public:
      */
     virtual ~Neighbor() {
     }
+
+    
+    /************** attribute processing ***************/
+    /**
+        Flexible attributes of the branch as key-value pairs (2018-10-08)
+     */
+    map<string,string> attributes;
+
+    /**
+     @param key key name
+     @param[out] value value for key
+     @return true if key exists, false otherwise
+     */
+    template<class T>
+    bool getAttr(string key, T& value) {
+        map<string,string>::iterator it = attributes.find(key);
+        if (it == attributes.end())
+            return false;
+        stringstream ss(it->second);
+        ss >> value;
+        return true;
+    }
+
+    /**
+     put pair of (key,value) to checkpoint
+     @param key key name
+     @param value value
+     */
+    template<class T>
+    void putAttr(string key, T value) {
+        stringstream ss;
+        ss.precision(10);
+        ss << value;
+        attributes[key] = ss.str();
+    }
 };
 
 /**
@@ -335,6 +370,13 @@ public:
         return key;
     }
 };
+
+typedef pair<Node*, Node*> pairNode;
+typedef vector<pairNode> BranchVector;
+typedef map<int, pairNode> Branches;
+
+#define PUT_ATTR(branch, value) branch->putAttr(#value, value)
+#define GET_ATTR(branch, value) branch->getAttr(#value, value)
 
 /*
     some macros to transverse neighbors of a node

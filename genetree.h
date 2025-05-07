@@ -72,6 +72,14 @@ public:
 
     string getBootstrapTree(int index);
 
+    void computeGeneConcordance(vector<GeneTree*> trees, map<string,string> &meanings);
+
+    void computeSiteConcordance(map<string,string> &meanings);
+
+    void computeSiteConcordance(pairNode &branch, int nquartets);
+   
+    void extractQuadSubtrees(vector<Split*> &subtrees, BranchVector &branches, Node *node = NULL, Node *dad = NULL);
+
     map<int, string> bootstrapTrees;
 
     Params treeParams;
