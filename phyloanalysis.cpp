@@ -2704,28 +2704,35 @@ void assignConcordanceFactors(Params &params) {
         if (mit->first[0] == '*')
             out << "# " << mit->first << ": " << mit->second << endl;
     out << "ID";
+	string pre = "ID";
     for (mit = meanings.begin(); mit != meanings.end(); mit++)
-        if (mit->first[0] != '*')
-            out << "\t" << mit->first;
-    out << "\tLabel\tLength" << endl;
+        if (mit->first[0] != '*') {
+            out << string(10 - pre.size(), ' ') << mit->first;
+			pre = mit->first;
+		}
+    out << string(10 - pre.size(), ' ') << "Label" << string(5, ' ') << "Length" << endl;
     for (BranchVector::iterator brit = branches.begin(); brit != branches.end(); brit++) {
         Neighbor *branch = brit->second->findNeighbor(brit->first);
         int ID = brit->second->id;
         out << ID;
+		pre = to_string(ID);
         for (mit = meanings.begin(); mit != meanings.end(); mit++) {
             if (mit->first[0] == '*')
                 continue; // ignore NOTES
-            out << '\t';
+            out << string(10 - pre.size(), ' ');
             string val;
-            if (branch->getAttr(mit->first, val))
+            if (branch->getAttr(mit->first, val)) {
                 out << val;
-            else
+				pre = val;
+			} else {
                 out << "NA";
+				pre = "NA";
+			}
         }
         double length = branch->length;
         string label;
         GET_ATTR(branch, label);
-        out << '\t' << label << '\t' << length << endl;
+        out << string(10 - pre.size(), ' ') << label <<  string(10 - label.size(), ' ') << length << endl;
     }
     out.close();
 
