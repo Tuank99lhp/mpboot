@@ -8,6 +8,8 @@
 
 #include "iqtree.h"
 
+void _resetGlobalParamOnNewAln();
+
 /**
  * HynDuf: optimize whatever tree is stored in tr by parsimony TBR
  * @param tr: the tree instance :)
