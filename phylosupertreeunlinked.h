@@ -19,6 +19,14 @@ public:
 
     StrVector getAllSeqNames();
 
+    void restoreGeneTreesCheckpoint();
+
+    void saveGeneTreesCheckpoint(int numTrees);
+
+    void restoreSCMTreeCheckpoint();
+
+    void saveSCMTreeCheckpoint();
+
     void runGeneTreesReconstruction();
 
     void printGeneTrees();

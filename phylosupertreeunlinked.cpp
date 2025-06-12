@@ -79,18 +79,62 @@ StrVector PhyloSuperTreeUnlinked::getAllSeqNames() {
     return allSeqNames;
 }
 
+void PhyloSuperTreeUnlinked::restoreGeneTreesCheckpoint() {
+    CheckpointFactory::restoreCheckpoint();
+    checkpoint->startStruct("GeneTrees");
+    checkpoint->startList(size());
+    for (auto it = begin(); it < end(); it++) {
+        checkpoint->addListElement();
+        string str;
+        if (!checkpoint->getString("", str)) {
+            break;
+        }
+
+        cout << "Restoring gene tree " << (it - begin()) << " from checkpoint" << endl;
+        
+        GeneTree* tree = (GeneTree*)(*it);
+        tree->readTreeString(str);
+    }
+    checkpoint->endList();
+    checkpoint->endStruct();
+}
+
+void PhyloSuperTreeUnlinked::saveGeneTreesCheckpoint(int numTrees) {
+    checkpoint->startStruct("GeneTrees");
+    checkpoint->startList(numTrees);
+
+    for (int i = 0; i < numTrees; i++) {
+        checkpoint->addListElement();
+        GeneTree* tree = (GeneTree*)(*this)[i];
+        checkpoint->put("", tree->getTreeString());
+    }
+
+    checkpoint->endList();
+    checkpoint->endStruct();
+    CheckpointFactory::saveCheckpoint();
+}
+
 void PhyloSuperTreeUnlinked::runGeneTreesReconstruction() {
+    restoreGeneTreesCheckpoint();
+
     for (auto it = begin(); it != end(); it++) {
+        GeneTree* tree = (GeneTree*)(*it);
+        if (tree->root) {
+            continue;
+        }
+
         cout << "----------     Reconstructing gene tree " << (it - begin()) << "     ----------\n";
         VerboseMode saved_mode;
         saved_mode = verbose_mode;
         verbose_mode = VB_QUIET;
 
-        GeneTree* tree = (GeneTree*)(*it);
         runOptimizeAndReconstruction(tree->treeParams, tree);
         
         verbose_mode = saved_mode;
         cout << "\n---------- Reconstruction of gene tree " << (it - begin()) << " done ----------\n\n";
+
+        saveGeneTreesCheckpoint(it - begin() + 1);
+        checkpoint->dump();
     }
 }
 
@@ -228,6 +272,23 @@ void PhyloSuperTreeUnlinked::printResultWithMRPTree() {
     printScoreWithConAln(mrpTree, "MRP");
 }
 
+void PhyloSuperTreeUnlinked::restoreSCMTreeCheckpoint() {
+    CheckpointFactory::restoreCheckpoint();
+    string str;
+    if (!checkpoint->getString("SCMTree", str)) {
+        return;
+    }
+    
+    cout << "Restoring SCM tree from checkpoint\n";
+    
+    scmTree = new GeneTree(str);
+}
+
+void PhyloSuperTreeUnlinked::saveSCMTreeCheckpoint() {
+    checkpoint->put("SCMTree", scmTree->getTreeString());
+    CheckpointFactory::saveCheckpoint();
+}
+
 void PhyloSuperTreeUnlinked::doSCM() {
     StrVector sourcesTree;
     int scaffoldDensity = 0;
@@ -241,8 +302,14 @@ void PhyloSuperTreeUnlinked::doSCM() {
     cout << fixed << setprecision(2) << "SCM: Scaffold density: " << 1.0 * scaffoldDensity / allSeqNames.size() << "\n";
 
     StrictConsensusMerge scm(sourcesTree, seqNameToIndex);
-    scmTree = scm.getSCMTree();
-    scmTree->reInitializeTree();
+
+    restoreSCMTreeCheckpoint();
+    if (!scmTree) {
+        scmTree = scm.getSCMTree();
+        scmTree->reInitializeTree();
+        saveSCMTreeCheckpoint();
+        checkpoint->dump();
+    }
 
     cout << fixed << setprecision(2) << "SCM: Resolution of SCM Tree: " << 1.0 * (scmTree->nodeNum - scmTree->leafNum - 1) / (scmTree->leafNum - 3) << "\n"; 
 
@@ -294,6 +361,9 @@ void PhyloSuperTreeUnlinked::doSCM() {
             mrpTree->root = NULL;
             assert(polytomy->degree() == 0);
             delete polytomy;
+
+            saveSCMTreeCheckpoint();
+            checkpoint->dump();
         }
         
         delete newTree;
